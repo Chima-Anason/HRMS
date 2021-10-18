@@ -13,10 +13,8 @@ import com.fh.entity.system.Role;
 import com.fh.util.PageData;
 import com.fh.service.system.leave.LeaveManager;
 
-/** 
- * 说明： 数据字典
- * 创建人：FH Q313596790
- * @version
+/** 用户接口类
+ * @author chima
  */
 @Service("leaveService")
 public class LeaveService implements LeaveManager{

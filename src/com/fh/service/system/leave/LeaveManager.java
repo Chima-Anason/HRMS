@@ -13,10 +13,8 @@ import com.fh.entity.Page;
 import com.fh.entity.system.Dictionaries;
 import com.fh.util.PageData;
 
-/** 
- * 说明： 数据字典接口类
- * 创建人：FH Q313596790
- * @version
+/** 用户接口类
+ * @author chima
  */
 public interface LeaveManager{
 	

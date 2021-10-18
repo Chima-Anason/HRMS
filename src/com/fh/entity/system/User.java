@@ -4,13 +4,12 @@ import com.fh.entity.Page;
 
 /**
  * 
-* 类名称：用户
-* 类描述： 
-* @author FH QQ 313596790[青苔]
+* 说明：HRMS
+* @author chima
 * 作者单位： 
 * 联系方式：
-* 修改时间：2018年6月28日
-* @version 1.0
+* 修改时间：2021-10-18
+* @version 2.0
  */
 public class User {
 	private String USER_ID;		//用户id
@@ -26,7 +25,6 @@ public class User {
 	private Role role;			//角色对象
 	private Page page;			//分页对象
 	private String SKIN;		//皮肤
-	
 	private String NAME_EN;
 	private String BIANMA;
 	private String DEPARTMENT_ID;

@@ -12,10 +12,8 @@ import com.fh.util.PageData;
 import com.fh.service.system.assignTraining.AssignTrainingManager;
 
 
-/** 
- * 说明： 数据字典
- * 创建人：FH Q313596790
- * @version
+/** 用户接口类
+ * @author chima
  */
 @Service("assignTrainingService")
 public class AssignTrainingService implements AssignTrainingManager{
@@ -23,15 +21,7 @@ public class AssignTrainingService implements AssignTrainingManager{
 	@Resource(name = "daoSupport")
 	private DaoSupport dao;
 	
-	/**列出此组下级
-	 * @param pd
-	 * @return
-	 * @throws Exception
-	 *//*
-	@SuppressWarnings("unchecked")
-	public List<Training> listTrainingToSelect(PageData pd) throws Exception {
-		return (List<Training>) dao.findForList("TrainingMapper.listTrainingToSelect", pd);
-	}*/
+	
 	
 	/**新增
 	 * @param pd

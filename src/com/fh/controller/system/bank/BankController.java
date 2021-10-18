@@ -27,9 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /** 
- * 说明：员工管理
- * 创建人：FH Q313596790
- * 修改时间：2018-04-23
+ * 说明：HRMS
+ * 创建人：chima
+ * 修改时间：2021-10-18
  */
 @Controller
 @RequestMapping(value="/bank")
@@ -54,11 +54,11 @@ public class BankController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("BANK_ID", this.get32UUID());	//主键
+		pd.put("BANK_ID", this.get32UUID());	//generate ID
 		pd.put("USER_ID", "");	//绑定账号ID
-		pd.put("CREATED_TIME", new Date());      //add current date when headman is created
+		pd.put("CREATED_TIME", new Date());      //add current date when a new Bank account is created
 		
-		if(bankService.findByAcc_No(pd) == null || "".equals(bankService.findByAcc_No(pd))){	//Determine if the building name exists
+		if(bankService.findByAcc_No(pd) == null || "".equals(bankService.findByAcc_No(pd))){	//Determine if the Acc_No exists
 			bankService.save(pd);				//执行保存
 			FHLOG.save(Jurisdiction.getUsername(), "新增账户："+pd.getString("ACC_NAME"));
 			mv.addObject("msg","success");
@@ -122,7 +122,7 @@ public class BankController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("EDITED_TIME", new Date());    //add current date when headman is edited
+		pd.put("EDITED_TIME", new Date());    //add current date to EDITED_TIME when bank acc is edited
 		bankService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -140,7 +140,7 @@ public class BankController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		String keywords = pd.getString("keywords");				//关键词检索条件
+		String keywords = pd.getString("keywords");				
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}

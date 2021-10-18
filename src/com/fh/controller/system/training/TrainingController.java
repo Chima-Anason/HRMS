@@ -29,13 +29,12 @@ import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import com.fh.util.Jurisdiction;
 import com.fh.service.system.fhbutton.FhbuttonManager;
-import com.fh.service.system.headman.HeadmanManager;
 import com.fh.service.system.training.TrainingManager;
 
 /** 
- * 说明：Training
- * 创建人：
- * 修改时间：2021-04-19
+ * 说明：HRMS
+ * 创建人：chima
+ * 修改时间：2021-10-18
  */
 @Controller
 @RequestMapping(value="/training")

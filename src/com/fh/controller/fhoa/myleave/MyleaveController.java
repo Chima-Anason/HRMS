@@ -29,8 +29,8 @@ import com.fh.util.Jurisdiction;
 import com.fh.service.fhoa.myleave.MyleaveManager;
 
 /** 
- * 说明：请假申请
- * 创建人：FH Q313596790
+ * 说明：请假申请 also used for my HRMS system
+ * 创建人：FH Q313596790 
  * 修改时间：2018-05-09
  */
 @Controller

@@ -34,9 +34,9 @@ import com.fh.service.system.dictionaries.DictionariesManager;
 import com.fh.service.system.leave.LeaveManager;
 
 /** 
- * 说明：数据字典
- * 创建人：FH Q313596790
- * 修改时间：2018-5-16
+ * 说明：Used the Dictionary for my Leave in the HRMS System
+ * 创建人：chima
+ * 修改时间：2021-10-18
  */
 @Controller
 @RequestMapping(value="/leave")
@@ -46,36 +46,6 @@ public class LeaveController extends BaseController {
 	@Resource(name="leaveService")
 	private LeaveManager leaveService;
 	
-	/**获取连级数据
-	 * @return
-	 *//*
-	@RequestMapping(value="/getLevels")
-	@ResponseBody
-	public Object getLevels(){
-		Map<String,Object> map = new HashMap<String,Object>();
-		String errInfo = "success";
-		PageData pd = new PageData();
-		try{
-			pd = this.getPageData();
-			String DICTIONARIES_ID = pd.getString("DICTIONARIES_ID");
-			DICTIONARIES_ID = Tools.isEmpty(DICTIONARIES_ID)?"0":DICTIONARIES_ID;
-			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(DICTIONARIES_ID); //用传过来的ID获取此ID下的子列表数据
-			List<PageData> pdList = new ArrayList<PageData>();
-			for(Dictionaries d :varList){
-				PageData pdf = new PageData();
-				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
-				pdf.put("BIANMA", d.getBIANMA());
-				pdf.put("NAME", d.getNAME());
-				pdList.add(pdf);
-			}
-			map.put("list", pdList);	
-		} catch(Exception e){
-			errInfo = "error";
-			logger.error(e.toString(), e);
-		}
-		map.put("result", errInfo);				//返回结果
-		return AppUtil.returnObject(new PageData(), map);
-	}*/
 	
 	/**保存
 	 * @param
@@ -111,20 +81,20 @@ public class LeaveController extends BaseController {
 		PageData pd = new PageData();
 		pd.put("DICTIONARIES_ID", DICTIONARIES_ID);
 		String errInfo = "success";
-		if(leaveService.listSubDictByParentId(DICTIONARIES_ID).size() > 0){//判断是否有子级，是：不允许删除
+		if(leaveService.listSubDictByParentId(DICTIONARIES_ID).size() > 0){
 			errInfo = "false";
 		}else{
-			pd = leaveService.findById(pd);					//根据ID读取
-			if("yes".equals(pd.getString("YNDEL")))return null;		//当禁止删除字段值为yes, 则禁止删除，只能从手动从数据库删除
+			pd = leaveService.findById(pd);					
+			if("yes".equals(pd.getString("YNDEL")))return null;		
 			if(null != pd.get("TBSNAME") && !"".equals(pd.getString("TBSNAME"))){
 				String TBFIELD = pd.getString("TBFIELD");
-				if(Tools.isEmpty(TBFIELD))TBFIELD = "BIANMA"; 		//如果关联字段没有设置，就默认字段为 BIANMA
+				if(Tools.isEmpty(TBFIELD))TBFIELD = "BIANMA"; 		
 				pd.put("TBFIELD", TBFIELD);
 				String[] table = pd.getString("TBSNAME").split(",");
 				for(int i=0;i<table.length;i++){
 					pd.put("thisTable", table[i]);
 					try {
-						if(Integer.parseInt(leaveService.findFromTbs(pd).get("zs").toString())>0){//判断是否被占用，是：不允许删除(去排查表检查字典表中的编码字段)
+						if(Integer.parseInt(leaveService.findFromTbs(pd).get("zs").toString())>0){
 							errInfo = "false";
 							break;
 						}
@@ -200,8 +170,8 @@ public class LeaveController extends BaseController {
 		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
 			DICTIONARIES_ID = pd.get("id").toString();
 		}
-		pd.put("DICTIONARIES_ID", "ce174640544549f1b31c8f66e01c111b");					//上级ID
-		//pd.put("PARENT_ID", "ce174640544549f1b31c8f66e01c111b");
+		pd.put("DICTIONARIES_ID", "ce174640544549f1b31c8f66e01c111b");					//上级ID the leave super id in the dictionary
+		
 		page.setPd(pd);
 		List<PageData>	varList = leaveService.list(page);	//列出Dictionaries列表
 		mv.addObject("pd", leaveService.findById(pd));		//传入上级所有信息

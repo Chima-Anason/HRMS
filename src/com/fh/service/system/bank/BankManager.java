@@ -5,10 +5,8 @@ import com.fh.util.PageData;
 
 import java.util.List;
 
-/** 
- * 说明： 员工管理接口
- * 创建人：FH Q313596790
- * @version
+/** 用户接口类
+ * @author chima
  */
 public interface BankManager {
 

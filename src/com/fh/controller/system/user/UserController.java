@@ -48,10 +48,9 @@ import com.fh.util.PathUtil;
 import com.fh.util.Tools;
 
 /** 
- * 类名称：UserController
- * 创建人：FH fh313596790qq(青苔)
- * 更新时间：2018年6月24日
- * @version
+ * 说明：HRMS
+ * 创建人：chima
+ * 修改时间：2021-10-18
  */
 @Controller
 @RequestMapping(value="/user")
@@ -481,32 +480,7 @@ public class UserController extends BaseController {
 	}
 	
 	
-	/**
-	 * 批量删除
-	 * @throws Exception 
-	 *//*
-	@RequestMapping(value="/addAllU")
-	@ResponseBody
-	public Object addAllU() throws Exception {
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return null;} //校验权限
-		logBefore(logger, Jurisdiction.getUsername()+"批量增加user");
-		FHLOG.save(Jurisdiction.getUsername(), "批量增加user");
-		PageData pd = new PageData();
-		Map<String,Object> map = new HashMap<String,Object>();
-		pd = this.getPageData();
-		List<PageData> pdList = new ArrayList<PageData>();
-		String USER_IDS = pd.getString("USER_IDS");
-		if(null != USER_IDS && !"".equals(USER_IDS)){
-			String ArrayUSER_IDS[] = USER_IDS.split(",");
-			userService.addAllU(ArrayUSER_IDS);
-			pd.put("msg", "ok");
-		}else{
-			pd.put("msg", "no");
-		}
-		pdList.add(pd);
-		map.put("list", pdList);
-		return AppUtil.returnObject(pd, map);
-	}*/
+	
 	
 	/**导出用户信息到EXCEL
 	 * @return

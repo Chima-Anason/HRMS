@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
-import com.fh.entity.system.Headman;
+
 import com.fh.entity.system.User;
 import com.fh.service.system.user.UserManager;
 import com.fh.util.PageData;
 
 
-/** 系统用户
- * @author fh313596790qq(青苔)
+/** 用户接口类
+ * @author chima
  */
 @Service("userService")
 public class UserService implements UserManager{

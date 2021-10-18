@@ -11,10 +11,8 @@ import javax.annotation.Resource;
 
 import java.util.List;
 
-/** 
- * 说明： 员工管理
- * 创建人：FH Q313596790
- * @version
+/** 用户接口类
+ * @author chima
  */
 @Service("bankService")
 public class BankService implements BankManager {
@@ -88,7 +86,7 @@ public class BankService implements BankManager {
     dao.update("BankMapper.userBinding", pd);
   }
   
-  /**Get the data through the building cat order
+  /**Get the data through the Acc_No
 	 * @param pd
 	 * @return
 	 * @throws Exception

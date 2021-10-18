@@ -4,12 +4,11 @@ import java.util.List;
 
 /**
  * 
-* 类名称：组织机构
-* 类描述： 
-* @author FH QQ 313596790[青苔]
+* 说明：HRMS
+* @author chima
 * 作者单位： 
 * 联系方式：
-* 修改时间：2018年5月16日
+* 修改时间：2021-10-18
 * @version 2.0
  */
 public class Department {

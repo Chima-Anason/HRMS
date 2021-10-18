@@ -2,6 +2,16 @@ package com.fh.entity.system;
 
 import java.sql.Date;
 
+/**
+ * 
+* 说明：HRMS
+* @author chima
+* 作者单位： 
+* 联系方式：
+* 修改时间：2021-10-18
+* @version 2.0
+ */
+
 @SuppressWarnings("unused")
 public class Bank {
 	

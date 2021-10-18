@@ -3,13 +3,13 @@ package com.fh.service.system.user;
 import java.util.List;
 
 import com.fh.entity.Page;
-import com.fh.entity.system.Headman;
+
 import com.fh.entity.system.User;
 import com.fh.util.PageData;
 
 
 /** 用户接口类
- * @author fh313596790qq(青苔)
+ * @author chima
  */
 public interface UserManager {
 	

@@ -29,7 +29,7 @@ import com.fh.util.Jurisdiction;
 import com.fh.service.fhoa.department.DepartmentManager;
 
 /** 
- * 说明：组织机构
+ * 说明：组织机构 also used for my HRMS system
  * 创建人：FH Q313596790
  * 修改时间：2018-2-16
  */
