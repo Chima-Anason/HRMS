@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BankMapper">
+
+<resultMap type="Bank" id="bankResultMap">
+		<id column="BANK_ID" property="BANK_ID"/>
+		<result column="BANK_NAME" property="BANK_NAME"/>
+		<result column="ACC_NAME" property="ACC_NAME"/>
+		<result column="ACC_NO" property="ACC_NO"/>
+		<result column="USER_ID" property="USER_ID"/>
+		<result column="CREATED_TIME" property="CREATED_TIME"/>
+		<result column="EDITED_TIME" property="EDITED_TIME"/>
+</resultMap>
+  
+  <!--表名 -->
+  <sql id="tableName">
+    OA_BANK_DETAILS
+  </sql>
+  
+  <!-- 字段 -->
+  <sql id="Field">
+    ACC_NAME,
+    ACC_NO,
+    BANK_NAME,
+    USER_ID,
+    BANK_ID,
+    CREATED_TIME,	
+	EDITED_TIME
+  </sql>
+  
+  <!-- 字段值 -->
+  <sql id="FieldValue">
+    #{ACC_NAME},
+    #{ACC_NO},
+    #{BANK_NAME},
+    #{USER_ID},
+    #{BANK_ID},
+    #{CREATED_TIME},	
+	#{EDITED_TIME}
+  </sql>
+  
+  <!-- 新增-->
+  <insert id="save" parameterType="pd">
+    insert into 
+  <include refid="tableName"></include>
+    (
+  <include refid="Field"></include>
+    ) values (
+  <include refid="FieldValue"></include>
+    )
+  </insert>
+  
+  <!-- 删除-->
+  <delete id="delete" parameterType="pd">
+    delete from
+    <include refid="tableName"></include>
+    where
+      BANK_ID = #{BANK_ID}
+  </delete>
+  
+  <!-- 修改 -->
+  <update id="edit" parameterType="pd">
+    update
+    <include refid="tableName"></include> 
+    set
+      ACC_NAME = #{ACC_NAME},
+      ACC_NO = #{ACC_NO},
+      BANK_NAME = #{BANK_NAME},
+      EDITED_TIME = #{EDITED_TIME}
+    where
+      BANK_ID = #{BANK_ID}
+  </update>
+  
+  <!-- 通过ID获取数据 -->
+  <select id="findById" parameterType="pd" resultType="pd">
+    select 
+    <include refid="Field"></include>
+    from 
+    <include refid="tableName"></include>
+    where
+      BANK_ID = #{BANK_ID}
+  </select>
+  
+  <!-- Get the data from the acc number -->
+	<select id="findByAcc_No" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			ACC_NO = #{ACC_NO}
+	</select>
+  
+  <!-- 列表 -->
+  <select id="datalistPage" parameterType="page" resultType="pd">
+    select
+			BANK_ID,
+			USER_ID,
+			BANK_NAME,
+			ACC_NO,	
+			ACC_NAME,	
+			CREATED_TIME,	
+			EDITED_TIME
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and
+			(
+				ACC_NAME LIKE '%'+#{pd.keywords}+'%'
+				 or 
+				BANK_NAME LIKE '%'+#{pd.keywords}+'%'
+				 or 
+				ACC_NO LIKE '%'+#{pd.keywords}+'%'
+			)
+				
+		</if>
+  </select>
+  
+  <!-- 列表(全部) -->
+  <select id="listAll" parameterType="pd" resultType="pd">
+    select
+    <include refid="Field"></include>
+    from 
+    <include refid="tableName"></include>
+  </select>
+  
+  <!-- 批量删除 -->
+  <delete id="deleteAll" parameterType="String">
+    delete from
+    <include refid="tableName"></include>
+    where
+      BANK_ID in
+    <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+    </foreach>
+  </delete>
+  
+  <!-- 绑定用户 -->
+  <update id="userBinding" parameterType="pd">
+    update
+    <include refid="tableName"></include>
+    set 
+      USER_ID = #{USER_ID}
+    where
+      BANK_ID = #{BANK_ID}
+  </update>
+  
+  <!-- fh313596790qq(青苔) -->
+</mapper>
