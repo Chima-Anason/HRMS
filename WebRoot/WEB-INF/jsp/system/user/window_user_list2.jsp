@@ -210,11 +210,11 @@ function setUser(USERNAME){
 
 
 
-/* //关闭窗口
+/*  //关闭窗口
 function wclose(){
-	$("#USERNAME").val("");
+	$("#xzvalue").val("");
 	top.Dialog.close();
-} */
+}  */
 		
 </script>
 </html>

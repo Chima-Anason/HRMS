@@ -175,6 +175,9 @@ public class AssignTrainingController extends BaseController {
 		if(ENDTIME != null && !"".equals(ENDTIME)){
 			pd.put("ENDTIME", ENDTIME+" 00:00:00");
 		} 
+		
+		pd.put("curUser", "admin");
+		
 		page.setPd(pd);
 		List<PageData>	varList = assignTrainingService.list(page);
 		//List<Training> trainingList = trainingService.listTrainingToSelect(pd);

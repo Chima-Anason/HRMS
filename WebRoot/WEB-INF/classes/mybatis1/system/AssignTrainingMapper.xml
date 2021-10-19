@@ -124,6 +124,9 @@
 		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
 		
 		 where a.TRAINING_ID = t.TRAINING_ID
+		 <if test="pd.curUser!=null and pd.curUser!=''">
+		  u.USERNAME = #{pd.curUser}
+		  </if>
 		
 		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
 			and

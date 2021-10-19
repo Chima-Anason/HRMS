@@ -27,6 +27,9 @@
 					
 					<form action="assignTraining/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="ASS_ID" id="ASS_ID" value="${pd.ASS_ID}"/>
+						<input type="hidden" name="USER_ID" id="USER_ID" value=""/>
+						
+						
 						<textarea style="display: none;" name="TRAINING_IDS" id="TRAINING_IDS" >${pd.TRAINING_IDS }</textarea>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
@@ -50,11 +53,16 @@
 										<tr>
 
   												<td style="width:79px;text-align: right;padding-top: 13px;">用户:</td>
-  												<td ><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-  												<td id="juese2"><button class="btn btn-outline-secondary" type="button" name="USER_ID" id="USER_ID"  onclick="xuanTp('USER_ID');">选择用户</button></td>
+  												<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
+  												<td id="juese3"><button class="btn btn-outline-secondary" type="button" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
 										</tr>
-										</c:if>
+										
 								<tr>
+								
+								</c:if>
+										<c:if test="${fx == 'head'}">
+											<input name="USER_ID" id="user_id" value="${pd.user_id }" type="hidden" />
+										</c:if>
 									<td class="center" colspan="6">
 										<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 										<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -118,7 +126,7 @@
 		
 		//保存
 		function save(){
-		
+		  /* $("#USER_ID").val(); */
 		  if($("#training_id").val()==""){
 			$("#juese").tips({
 				side:3,
@@ -131,8 +139,8 @@
 		}   
 		
 		
-		  if($("#USER_ID").val()==""){
-			$("#juese2").tips({
+		   if($("#USER_ID").val()==""){
+			$("#juese3").tips({
 				side:3,
 	            msg:'选择用户',
 	            bg:'#AE81FF',
@@ -140,7 +148,18 @@
 	        });
 			$("#USER_ID").focus();
 			return false;
-		}   
+		}  
+		
+		 if($("#USERNAME").val()==""){
+			$("#juese2").tips({
+				side:3,
+	            msg:'选择用户',
+	            bg:'#AE81FF',
+	            time:2
+	        });
+			$("#USERNAME").focus();
+			return false;
+		}      
 		
 			$("#Form").submit();
 			
@@ -161,12 +180,18 @@
 		 diag.Width = 860;
 		 diag.Height = 680;
 		 diag.CancelEvent = function(){ //关闭事件
-		     var id = diag.innerFrame.contentWindow.document.getElementById('xzid').value;
+		    /*  var id = diag.innerFrame.contentWindow.document.getElementById('xzid').value;
 		     var xzValue = diag.innerFrame.contentWindow.document.getElementById('xzvalue').value;
 		     
-			 //$("#"+ID).val(xzValue);
-			  //$("#"+id).val(id);
-			 alert("id : " + id + " xzvalue " + xzValue);
+			 $("#"+ID).val(xzValue);
+			 $("#"+id).val(id);
+			 //alert("id : " + id + " xzvalue " + xzValue); */
+			 
+			 
+			  $("#"+ID).val(diag.innerFrame.contentWindow.document.getElementById('xzvalue').value); 
+
+			  $("#USER_ID").val(diag.innerFrame.contentWindow.document.getElementById('xzid').value);
+			 
 			 diag.close();
 		 };
 		 diag.show();
