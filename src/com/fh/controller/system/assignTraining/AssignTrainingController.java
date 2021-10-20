@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
-
 import com.fh.entity.system.Role;
 import com.fh.entity.system.Training;
 import com.fh.entity.system.User;
@@ -175,9 +174,16 @@ public class AssignTrainingController extends BaseController {
 		if(ENDTIME != null && !"".equals(ENDTIME)){
 			pd.put("ENDTIME", ENDTIME+" 00:00:00");
 		} 
-		
-		pd.put("curUser", "admin");
-		
+		String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
+		System.out.println("curuser is : " + curUser);
+		// user can only see his training
+		if(curUser == "admin"){
+			pd.put("curUser", "");
+		}else{
+			pd.put("curUser", curUser);
+		}
+		/*pd.put("curUser", "admin");*/
+		//pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
 		page.setPd(pd);
 		List<PageData>	varList = assignTrainingService.list(page);
 		//List<Training> trainingList = trainingService.listTrainingToSelect(pd);

@@ -65,9 +65,9 @@
 									<option value="2" <c:if test="${pd.STATUZ == '2' }">selected</c:if>>未读</option>
 								  	</select>
 								</td>
-								<c:if test="${QX.cha == 1 }">
-								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
-								</c:if>
+								
+								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();" title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+								
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -82,12 +82,12 @@
 									<th class="center">员工编号</th>
 									<th class="center">用户名</th>
 									<th class="center">部门名称</th>
+									<th class="center">用户状态</th>
 									<th class="center">培训名称</th>
 									<th class="center">时长</th>
 									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>开始时间</th>
 									<th class="center"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>结束时间</th>
 									<th class="center">培训状态</th>
-									<th class="center">用户状态</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -107,6 +107,7 @@
 											<td class='center'>${var.BIANMA}</td>
 											<td class='center'>${var.USERNAME}</td>
 											<td class='center'>${var.DEPARTMENTNAME}</td>
+											<td class='center' id="STATUZ${vs.index+1}"><c:if test="${var.STATUZ == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUZ == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
 											<td class='center'>${var.TRAINNAME}</td>
 											<td class='center'>${var.HOW_LONG}</td>
 											<td class='center'>${var.STARTTIME}</td>
@@ -115,7 +116,7 @@
 												<c:if test="${var.STATUS == '0' }"><span class="label label-important arrowed-in">完整的</span></c:if>
 												<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">计划了的</span></c:if>
 											</td>
-											<td class='center' id="STATUZ${vs.index+1}"><c:if test="${var.STATUZ == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUZ == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
+											
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

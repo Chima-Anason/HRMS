@@ -123,6 +123,10 @@ public class MyleaveController extends AcStartController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		String TYPE = pd.getString("TYPE");				
+		if(null != TYPE && !"".equals(TYPE)){
+			pd.put("TYPE", TYPE);
+		}
 		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
 		page.setPd(pd);
 		List<PageData>	varList = myleaveService.list(page);	//列出Myleave列表

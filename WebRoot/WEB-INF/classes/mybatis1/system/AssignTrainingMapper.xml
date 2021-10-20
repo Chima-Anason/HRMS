@@ -124,9 +124,13 @@
 		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
 		
 		 where a.TRAINING_ID = t.TRAINING_ID
-		 <if test="pd.curUser!=null and pd.curUser!=''">
-		  u.USERNAME = #{pd.curUser}
-		  </if>
+		   <if test="pd.curUser!=null and pd.curUser!=''">
+		     and u.USERNAME = #{pd.curUser}
+		    </if> 
+		  
+		 <!-- <if test="pd.USERNAME!= null and pd.USERNAME != ''">
+			and u.USERNAME = #{pd.USERNAME}
+		</if> -->
 		
 		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
 			and
@@ -149,6 +153,9 @@
 		</if>
 		<if test="pd.ENDTIME!=null and pd.ENDTIME!=''">
 			and t.ENDTIME &lt;= #{pd.ENDTIME} 
+		</if>
+		<if test="pd.STATUZ!=null and pd.STATUZ!=''">
+			and a.STATUZ = #{pd.STATUZ} 
 		</if>
 	</select>
 	
