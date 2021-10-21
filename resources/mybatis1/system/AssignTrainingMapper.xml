@@ -82,6 +82,16 @@
 			ASS_ID = #{ASS_ID}
 	</update>
 	
+	<!-- 修改 状态-->
+	<update id="editStatus" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUZ = '1'
+		<!-- where 
+		ASS_ID = #{ASS_ID} -->
+	</update>
+	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 
@@ -124,13 +134,13 @@
 		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
 		
 		 where a.TRAINING_ID = t.TRAINING_ID
-		   <if test="pd.curUser!=null and pd.curUser!=''">
+		   <!-- <if test="pd.curUser!=null and pd.curUser!=''">
 		     and u.USERNAME = #{pd.curUser}
-		    </if> 
+		    </if>  -->
 		  
-		 <!-- <if test="pd.USERNAME!= null and pd.USERNAME != ''">
+		 <if test="pd.USERNAME!= null and pd.USERNAME != ''">
 			and u.USERNAME = #{pd.USERNAME}
-		</if> -->
+		</if> 
 		
 		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
 			and

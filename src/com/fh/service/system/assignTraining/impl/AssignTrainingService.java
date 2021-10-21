@@ -47,6 +47,14 @@ public class AssignTrainingService implements AssignTrainingManager{
 		dao.update("AssignTrainingMapper.edit", pd);
 	}
 	
+	/**修改状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editStatus(PageData pd)throws Exception{
+		dao.update("AssignTrainingMapper.editStatus", pd);
+	}
+	
 	/**列表
 	 * @param page
 	 * @throws Exception

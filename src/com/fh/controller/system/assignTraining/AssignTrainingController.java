@@ -146,6 +146,7 @@ public class AssignTrainingController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("STATUZ", "2");	
 		assignTrainingService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -162,6 +163,7 @@ public class AssignTrainingController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
@@ -177,15 +179,23 @@ public class AssignTrainingController extends BaseController {
 		String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
 		System.out.println("curuser is : " + curUser);
 		// user can only see his training
-		if(curUser == "admin"){
-			pd.put("curUser", "");
-		}else{
-			pd.put("curUser", curUser);
-		}
+/*		if("admin".equals(Jurisdiction.getUsername())){
+			pd.put("USERNAME", "");
+		}else if(!"admin".equals(Jurisdiction.getUsername())){
+			pd.put("USERNAME", Jurisdiction.getUsername());
+			pd.put("STATUZ", "1");	
+		}*/
 		/*pd.put("curUser", "admin");*/
-		//pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
+		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
+		
+		if(!"admin".equals(Jurisdiction.getUsername())){ 
+			assignTrainingService.editStatus(pd);
+		}
+		
+		
 		page.setPd(pd);
 		List<PageData>	varList = assignTrainingService.list(page);
+		System.out.println("ASS_ID is : " + pd.getString("ASS_ID"));
 		//List<Training> trainingList = trainingService.listTrainingToSelect(pd);
 		//List<User> userList = userService.listAllUsers(pd);
 		mv.setViewName("system/assignTraining/assignTraining_list");
@@ -231,7 +241,8 @@ public class AssignTrainingController extends BaseController {
 		pd = this.getPageData();
 		List<Training> trainingList = trainingService.listTrainingToSelect(pd);
 		List<User> userList = userService.listAllUsers(pd);
-		pd = trainingService.findById(pd);	//根据ID读取
+		//pd = trainingService.findById(pd);	//根据ID读取
+		pd = assignTrainingService.findById(pd);//根据ID读取	
 		mv.setViewName("system/assignTraining/assignTraining_edit");
 		mv.addObject("trainingList", trainingList);
 		mv.addObject("userList", userList);
