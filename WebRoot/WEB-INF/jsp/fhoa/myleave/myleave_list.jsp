@@ -61,6 +61,7 @@
 									<th class="center">结束时间</th>
 									<th class="center">时长</th>
 									<th class="center">申请人</th>
+									<th class="center">状态</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -76,16 +77,20 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MYLEAVE_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class='center'>${var.TYPE}</td>
-											<td class='center'>${var.STARTTIME}</td>
-											<td class='center'>${var.ENDTIME}</td>
-											<td class='center'>${var.WHENLONG}</td>
-											<td class='center'><a onclick="viewUser('${var.USERNAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${var.USERNAME}</a></td>
+											<td class='left'>${var.TYPE}</td>
+											<td class='left'>${var.STARTTIME}</td>
+											<td class='left'>${var.ENDTIME}</td>
+											<td class='left'>${var.WHENLONG}</td>
+											<td class='left'><a onclick="viewUser('${var.USERNAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${var.USERNAME}</a></td>
+											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">拒绝</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">接受</span></c:if></td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
+													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUZ}','${var.MYLEAVE_ID}','${var.USER_ID}');">
+														<i class="ace-icon fa fa-search nav-search-icon"></i>
+													</a>
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('${var.MYLEAVE_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
@@ -270,6 +275,25 @@
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 tosearch();
 				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//查看信件
+		function viewx(ztid,STATUS,Id,USER_ID){
+			if(STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">拒绝</span>'){
+				$("#"+ztid).html('<span class="label label-success arrowed">接受</span>');
+				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
+			}
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="站内信";
+			 diag.URL = '<%=basePath%>assignTraining/goView.do?MYLEAVE_ID='+Id+'&USER_ID='+USER_ID+'&STATUS='+STATUS;
+			 diag.Width = 600;
+			 diag.Height = 300;
+			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };
 			 diag.show();

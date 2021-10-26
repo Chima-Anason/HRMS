@@ -75,11 +75,11 @@
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
 											<%-- <td class='center'><a href="javascript:goSondict('${var.DICTIONARIES_ID }')"><i class="ace-icon fa fa-share bigger-100"></i>&nbsp;${var.NAME}</a></td>
 											<td class='center'><a href="javascript:goSondict('${var.DICTIONARIES_ID }')">${var.NAME_EN}</a></td> --%>
-											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.NAME_EN}</td>
-											<td class='center'>${var.BIANMA}</td>
-											<td class='center'>${var.DICTIONARIES_ID}</td>
-											<td class='center'>${var.ORDER_BY}</td>
+											<td class='left'>${var.NAME}</td>
+											<td class='left'>${var.NAME_EN}</td>
+											<td class='left'>${var.BIANMA}</td>
+											<td class='left'>${var.DICTIONARIES_ID}</td>
+											<td class='left'>${var.ORDER_BY}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

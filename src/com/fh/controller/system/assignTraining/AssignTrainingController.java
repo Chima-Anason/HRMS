@@ -25,6 +25,7 @@ import com.fh.entity.system.Role;
 import com.fh.entity.system.Training;
 import com.fh.entity.system.User;
 import com.fh.util.AppUtil;
+import com.fh.util.DateUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import com.fh.util.Jurisdiction;
@@ -66,6 +67,13 @@ public class AssignTrainingController extends BaseController {
 		pd = this.getPageData();
 		pd.put("ASS_ID", this.get32UUID());	//主键
 		pd.put("STATUZ", "2");	
+		pd.put("SEND_TIME", DateUtil.getTime());				//发送时间
+		pd.put("FROM_USERNAME", Jurisdiction.getUsername());	//发培训人
+		
+		userService.findById(pd);
+		String username = pd.getString("USERNAME");
+		pd.put("TO_USERNAME", username); 
+		
 		assignTrainingService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -147,6 +155,12 @@ public class AssignTrainingController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("STATUZ", "2");	
+		pd.put("SEND_TIME", DateUtil.getTime());				//发送时间
+		
+		userService.findById(pd);
+		String username = pd.getString("USERNAME");
+		pd.put("TO_USERNAME", username); 
+		
 		assignTrainingService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -176,8 +190,8 @@ public class AssignTrainingController extends BaseController {
 		if(ENDTIME != null && !"".equals(ENDTIME)){
 			pd.put("ENDTIME", ENDTIME+" 00:00:00");
 		} 
-		String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
-		System.out.println("curuser is : " + curUser);
+		/*String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
+		System.out.println("curuser is : " + curUser);*/
 		// user can only see his training
 /*		if("admin".equals(Jurisdiction.getUsername())){
 			pd.put("USERNAME", "");
@@ -187,13 +201,8 @@ public class AssignTrainingController extends BaseController {
 		}*/
 		/*pd.put("curUser", "admin");*/
 		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
-		
-		if(!"admin".equals(Jurisdiction.getUsername())){ 
-			assignTrainingService.editStatus(pd);
-		}
-		
-		
 		page.setPd(pd);
+		
 		List<PageData>	varList = assignTrainingService.list(page);
 		System.out.println("ASS_ID is : " + pd.getString("ASS_ID"));
 		//List<Training> trainingList = trainingService.listTrainingToSelect(pd);
@@ -206,6 +215,25 @@ public class AssignTrainingController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
+	
+	
+	 /**去查看页面
+		 * @param
+		 * @throws Exception
+		 */
+		@RequestMapping(value="/goView")
+		public ModelAndView goView()throws Exception{
+			ModelAndView mv = this.getModelAndView();
+			PageData pd = new PageData();
+			pd = this.getPageData();
+			if(!"admin".equals(Jurisdiction.getUsername())){ //if the user view the assigned training then the status will change to already read
+				assignTrainingService.editStatus(pd);
+			}
+			pd = assignTrainingService.findById(pd);	//根据ID读取
+			mv.setViewName("system/assignTraining/assignTraining_view");
+			mv.addObject("pd", pd);
+			return mv;
+		}	
 	
 	/**去新增页面
 	 * @param

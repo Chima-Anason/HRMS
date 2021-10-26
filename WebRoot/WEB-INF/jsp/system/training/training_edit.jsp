@@ -48,7 +48,7 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">培训名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入培训名称" title="培训名称" style="width:76%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">请假时长:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">培训时长:</td>
 								<td><input type="text" name="HOW_LONG" id="HOW_LONG" value="${pd.HOW_LONG}" maxlength="50" placeholder="这里输入时长" title="时长" style="width:76%;"/>&nbsp;天/时</td>
 							</tr>
 							<tr>
@@ -57,8 +57,8 @@
 									<td style="width:79px;text-align: right;padding-top: 13px;">状态:</td>
 									<td>
 										<select name="STATUS" title="状态">
-										<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if> >计划了的</option>
-										<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >完整的</option>
+										<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if> >进行中</option>
+										<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >完成</option>
 										</select>
 									</td>
 								</tr>
@@ -140,6 +140,16 @@
 				$("#ENDTIME").tips({
 					side:3,
 		            msg:'请输入结束时间',
+		            bg:'#AE81FF',
+		            time:2
+		        });
+				$("#ENDTIME").focus();
+			return false;
+			}
+			if($("#ENDTIME").val() < $("#STARTTIME").val){
+				$("#ENDTIME").tips({
+					side:3,
+		            msg:'结束时间不能小于开始时间',
 		            bg:'#AE81FF',
 		            time:2
 		        });

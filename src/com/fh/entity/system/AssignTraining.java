@@ -18,6 +18,10 @@ public class AssignTraining {
 	private String STATUZ;			
 	private String TRAINING_ID;	
 	private String USER_ID;
+	private String CONTENT;
+	private String TO_USERNAME;
+	private String FROM_USERNAME;
+	private String SEND_TIME;
 	
 	
 	public String getASS_ID() {
@@ -44,6 +48,30 @@ public class AssignTraining {
 	}
 	public void setSTATUZ(String sTATUZ) {
 		STATUZ = sTATUZ;
+	}
+	public String getCONTENT() {
+		return CONTENT;
+	}
+	public void setCONTENT(String cONTENT) {
+		CONTENT = cONTENT;
+	}
+	public String getTO_USERNAME() {
+		return TO_USERNAME;
+	}
+	public void setTO_USERNAME(String tO_USERNAME) {
+		TO_USERNAME = tO_USERNAME;
+	}
+	public String getFROM_USERNAME() {
+		return FROM_USERNAME;
+	}
+	public void setFROM_USERNAME(String fROM_USERNAME) {
+		FROM_USERNAME = fROM_USERNAME;
+	}
+	public String getSEND_TIME() {
+		return SEND_TIME;
+	}
+	public void setSEND_TIME(String sEND_TIME) {
+		SEND_TIME = sEND_TIME;
 	}	
 	
 	

@@ -104,17 +104,17 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.ASS_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class='center'>${var.BIANMA}</td>
-											<td class='center'>${var.USERNAME}</td>
-											<td class='center'>${var.DEPARTMENTNAME}</td>
+											<td class='left'>${var.BIANMA}</td>
+											<td class='left'>${var.USERNAME}</td>
+											<td class='left'>${var.DEPARTMENTNAME}</td>
 											<td class='center' id="STATUZ${vs.index+1}"><c:if test="${var.STATUZ == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUZ == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
-											<td class='center'>${var.TRAINNAME}</td>
-											<td class='center'>${var.HOW_LONG}</td>
-											<td class='center'>${var.STARTTIME}</td>
-											<td class='center'>${var.ENDTIME}</td>
+											<td class='left'>${var.TRAINNAME}</td>
+											<td class='left'>${var.HOW_LONG}</td>
+											<td class='left'>${var.STARTTIME}</td>
+											<td class='left'>${var.ENDTIME}</td>
 											<td style="width: 60px;" class="center">
-												<c:if test="${var.STATUS == '0' }"><span class="label label-important arrowed-in">完整的</span></c:if>
-												<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">计划了的</span></c:if>
+												<c:if test="${var.STATUS == '0' }"><span class="label label-important arrowed-in">完成</span></c:if>
+												<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">进行中</span></c:if>
 											</td>
 											
 											<td class="center">
@@ -122,6 +122,9 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
+													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUZ}','${var.ASS_ID}','${var.USER_ID}');">
+														<i class="ace-icon fa fa-search nav-search-icon"></i>
+													</a>
 													<c:if test="${QX.edit == 1 }">
 													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.ASS_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
@@ -286,7 +289,7 @@
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>assignTraining/goAdd.do';
 			 diag.Width = 470;
-			 diag.Height = 187;
+			 diag.Height = 370;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -322,11 +325,30 @@
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>assignTraining/goEdit.do?ASS_ID='+Id;
 			 diag.Width = 470;
-			 diag.Height = 187;
+			 diag.Height = 370;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 nextPage(${page.currentPage});
 				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//查看信件
+		function viewx(ztid,STATUZ,Id,USER_ID){
+			if(STATUZ == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
+				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
+				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
+			}
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="站内信";
+			 diag.URL = '<%=basePath%>assignTraining/goView.do?ASS_ID='+Id+'&USER_ID='+USER_ID+'&STATUZ='+STATUZ;
+			 diag.Width = 600;
+			 diag.Height = 300;
+			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };
 			 diag.show();

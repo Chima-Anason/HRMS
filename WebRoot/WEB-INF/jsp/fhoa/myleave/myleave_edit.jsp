@@ -144,6 +144,16 @@
 				$("#ENDTIME").focus();
 			return false;
 			}
+			if($("#ENDTIME").val() < $("#STARTTIME").val){
+				$("#ENDTIME").tips({
+					side:3,
+		            msg:'结束时间不能小于开始时间',
+		            bg:'#AE81FF',
+		            time:2
+		        });
+				$("#ENDTIME").focus();
+			return false;
+			}
 			if($("#TYPE").val()==""){
 				$("#TYPE").tips({
 					side:3,

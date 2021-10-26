@@ -56,13 +56,20 @@
   												<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
   												<td id="juese3"><button class="btn btn-outline-secondary" type="button" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
 										</tr>
-										
 								<tr>
-								
 								</c:if>
 										<c:if test="${fx == 'head'}">
 											<input name="USER_ID" id="user_id" value="${pd.user_id }" type="hidden" />
 										</c:if>
+								<c:if test="${fx != 'head'}">
+										<tr>
+								<td style="width:75px;text-align: right;padding-top: 13px;">评论:</td>
+								<td  colspan="10">
+									<textarea  name="CONTENT" id="CONTENT" maxlength="1000" placeholder="这里输入评论" title="评论" style="width:100%;height:160px;" >${pd.CONTENT}</textarea>
+								</td>
+							</tr>
+							</c:if>
+							<tr>
 									<td class="center" colspan="6">
 										<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 										<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
@@ -148,7 +155,17 @@
 	        });
 			$("#USER_ID").focus();
 			return false;
-		}  
+		}
+		if($("#CONTENT").val()==""){
+				$("#CONTENT").tips({
+					side:3,
+		            msg:'请输入评论',
+		            bg:'#AE81FF',
+		            time:2
+		        });
+				$("#CONTENT").focus();
+			return false;
+			}  
 		
 		 if($("#USERNAME").val()==""){
 			$("#juese2").tips({

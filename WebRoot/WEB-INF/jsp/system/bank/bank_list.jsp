@@ -76,12 +76,12 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.BANK_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class='center'>${var.ACC_NO}</td>
-											<td class='center'>${var.ACC_NAME}</td>
-											<td class='center'>${var.BANK_NAME}</td>
-											<td class='center'>${var.CREATED_TIME}</td>
-											<td class='center'>${var.EDITED_TIME}</td>
-											<td class='center'>
+											<td class='left'>${var.ACC_NO}</td>
+											<td class='left'>${var.ACC_NAME}</td>
+											<td class='left'>${var.BANK_NAME}</td>
+											<td class='left'>${var.CREATED_TIME}</td>
+											<td class='left'>${var.EDITED_TIME}</td>
+											<td class='left'>
 												<c:if test="${var.USER_ID != '' }">
 													<a onclick="viewUser('${var.USER_ID}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${var.USER_ID}</a> 
 													

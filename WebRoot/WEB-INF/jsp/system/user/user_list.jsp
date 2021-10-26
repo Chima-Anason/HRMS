@@ -95,13 +95,13 @@
 												<c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class="center">${user.BIANMA }</td>
-											<td class="center"><a onclick="viewUser('${user.USERNAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${user.USERNAME }</a></td>
-											<td class="center">${user.NAME }</td>
-											<td class="center">${user.ROLE_NAME }</td>
-											<td class="center"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
-											<td class="center">${user.LAST_LOGIN}</td>
-											<td class="center">${user.IP}</td>
+											<td class="left">${user.BIANMA }</td>
+											<td class="left"><a onclick="viewUser('${user.USERNAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${user.USERNAME }</a></td>
+											<td class="left">${user.NAME }</td>
+											<td class="left">${user.ROLE_NAME }</td>
+											<td class="left"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" <c:if test="${QX.email == 1 }">onclick="sendEmail('${user.EMAIL }');"</c:if>>${user.EMAIL }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
+											<td class="left">${user.LAST_LOGIN}</td>
+											<td class="left">${user.IP}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

@@ -77,9 +77,9 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.FHLOG_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class='center' style="width: 200px;">${var.USERNAME}</td>
-											<td class='center'>${var.CONTENT}</td>
-											<td class='center' style="width: 150px;">${var.CZTIME}</td>
+											<td class='left' style="width: 200px;">${var.USERNAME}</td>
+											<td class='left'>${var.CONTENT}</td>
+											<td class='left' style="width: 150px;">${var.CZTIME}</td>
 											<td class="center" style="width: 50px;">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

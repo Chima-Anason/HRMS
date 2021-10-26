@@ -5,6 +5,10 @@
 	<resultMap type="AssignTraining" id="assignTrainingResultMap">
 		<id column="ASS_ID" property="ASS_ID"/>
 		<result column="STATUZ" property="STATUZ"/>
+		<result column="CONTENT" property="CONTENT"/>
+		<result column="TO_USERNAME" property="TO_USERNAME"/>
+		<result column="FROM_USERNAME" property="FROM_USERNAME"/>
+		<result column="SEND_TIME" property="SEND_TIME"/>
 		<result column="TRAINING_ID" property="TRAINING_ID"/>
 		<result column="USER_ID" property="USER_ID"/>
 	</resultMap>	
@@ -28,16 +32,24 @@
 	
 	<!-- 字段 -->
 	<sql id="Field">
+		CONTENT,
 		ASS_ID,
 		STATUZ,
+		TO_USERNAME,	
+		FROM_USERNAME,	
+		SEND_TIME,
 		TRAINING_ID,
 		USER_ID
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
+	    #{CONTENT},
 		#{ASS_ID},
 		#{STATUZ},
+		#{TO_USERNAME},	
+		#{FROM_USERNAME},	
+		#{SEND_TIME},	
 		#{TRAINING_ID},
 		#{USER_ID}
 	</sql>
@@ -76,6 +88,9 @@
 		<include refid="tableName"></include>
 		set 
 			STATUZ = #{STATUZ},
+			SEND_TIME = #{SEND_TIME},
+			TO_USERNAME = #{TO_USERNAME},
+			CONTENT = #{CONTENT},
 			TRAINING_ID = #{TRAINING_ID},
 			USER_ID = #{USER_ID}
 		where 
@@ -88,8 +103,8 @@
 		<include refid="tableName"></include>
 		set 
 			STATUZ = '1'
-		<!-- where 
-		ASS_ID = #{ASS_ID} -->
+		 where 
+		USER_ID = #{USER_ID} 
 	</update>
 	
 	<!-- 通过ID获取数据 -->
@@ -117,6 +132,10 @@
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select  a.ASS_ID,
 				a.STATUZ,
+				a.CONTENT,
+				a.TO_USERNAME,
+				a.FROM_USERNAME,
+				a.SEND_TIME,
 				a.TRAINING_ID,
 				t.STATUS,
 				t.NAME as TRAINNAME,

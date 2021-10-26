@@ -50,8 +50,8 @@
 								 	<select class="chosen-select form-control" name="STATUS" id="STATUS" data-placeholder="状态" style="vertical-align:top;width: 79px;">
 									<option value=""></option>
 									<option value="">全部</option>
-									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if> >计划了的</option>
-									<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >完整的</option>
+									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if> >进行中</option>
+									<option value="0" <c:if test="${pd.STATUS == '0' }">selected</c:if> >完成</option>
 									</select>
 								</td>
 								<c:if test="${QX.cha == 1 }">
@@ -88,13 +88,13 @@
 												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.TRAINING_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${page.showCount*(page.currentPage-1)+vs.index+1}</td>
-											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.HOW_LONG}</td>
-											<td class='center'>${var.STARTTIME}</td>
-											<td class='center'>${var.ENDTIME}</td>
+											<td class='left'>${var.NAME}</td>
+											<td class='left'>${var.HOW_LONG}</td>
+											<td class='left'>${var.STARTTIME}</td>
+											<td class='left'>${var.ENDTIME}</td>
 											<td style="width: 60px;" class="center">
-												<c:if test="${var.STATUS == '0' }"><span class="label label-important arrowed-in">完整的</span></c:if>
-												<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">计划了的</span></c:if>
+												<c:if test="${var.STATUS == '0' }"><span class="label label-important arrowed-in">完成</span></c:if>
+												<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">进行中</span></c:if>
 											</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
