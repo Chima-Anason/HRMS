@@ -1,6 +1,7 @@
 package com.fh.service.fhoa.myleave;
 
 import java.util.List;
+
 import com.fh.entity.Page;
 import com.fh.util.PageData;
 
@@ -28,6 +29,18 @@ public interface MyleaveManager{
 	 * @throws Exception
 	 */
 	public void edit(PageData pd)throws Exception;
+	
+	/**修改STATUZ
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void accept(PageData pd)throws Exception;
+	
+	/**修改STATUZ
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void reject(PageData pd)throws Exception;
 	
 	/**列表
 	 * @param page

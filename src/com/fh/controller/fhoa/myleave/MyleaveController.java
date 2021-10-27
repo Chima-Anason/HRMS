@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fh.controller.activiti.AcStartController;
 import com.fh.entity.Page;
 import com.fh.util.AppUtil;
+import com.fh.util.DateUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import com.fh.util.Jurisdiction;
@@ -53,6 +54,8 @@ public class MyleaveController extends AcStartController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("MYLEAVE_ID", this.get32UUID());					//主键
+		pd.put("STATUS", "");	
+		pd.put("SEND_TIME", DateUtil.getTime());				//发送时间
 		pd.put("USERNAME", Jurisdiction.getUsername());			//用户名
 		try {
 			/** 工作流的操作 **/
@@ -102,6 +105,8 @@ public class MyleaveController extends AcStartController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("STATUS", "");
+		pd.put("SEND_TIME", DateUtil.getTime());				//发送时间
 		myleaveService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -167,6 +172,48 @@ public class MyleaveController extends AcStartController {
 		mv.addObject("pd", pd);
 		return mv;
 	}	
+	
+	/**去查看页面
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/goView")
+	public ModelAndView goView()throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd = myleaveService.findById(pd);	//根据ID读取
+		
+		String user = Jurisdiction.getUsername();
+		pd.put("user", user);
+		mv.setViewName("fhoa/myleave/myleave_view");
+		mv.addObject("pd", pd);
+		return mv;
+	}	
+	
+	/**修改
+	 * @param
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/handle")
+	public ModelAndView handle() throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"修改Myleave");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String msg = pd.getString("msg");
+		if("admin".equals(Jurisdiction.getUsername())){
+			if("yes".equals(msg)){
+				myleaveService.accept(pd);
+			}else{
+				myleaveService.reject(pd);
+			}
+		}
+		mv.addObject("msg","success");
+		mv.setViewName("save_result");
+		return mv;
+	}
 	
 	 /**批量删除
 	 * @param

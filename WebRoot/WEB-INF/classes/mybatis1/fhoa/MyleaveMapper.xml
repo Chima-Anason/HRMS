@@ -10,22 +10,26 @@
 	<!-- 字段 -->
 	<sql id="Field">
 		USERNAME,	
-		TYPE,	
+		TYPE,
+		STATUS,	
 		STARTTIME,	
 		ENDTIME,	
 		WHENLONG,	
 		REASON,	
+		SEND_TIME,
 		MYLEAVE_ID
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
 		#{USERNAME},	
-		#{TYPE},	
+		#{TYPE},
+		#{STATUS},	
 		#{STARTTIME},	
 		#{ENDTIME},	
 		#{WHENLONG},	
 		#{REASON},	
+		#{SEND_TIME},
 		#{MYLEAVE_ID}
 	</sql>
 	
@@ -54,13 +58,35 @@
 		<include refid="tableName"></include>
 		set 
 			TYPE = #{TYPE},
+			STATUS = #{STATUS},
 			STARTTIME = #{STARTTIME},
 			ENDTIME = #{ENDTIME},
+			SEND_TIME = #{SEND_TIME},
 			WHENLONG = #{WHENLONG},
 			REASON = #{REASON},
 		MYLEAVE_ID = MYLEAVE_ID
 		where 
 		MYLEAVE_ID = #{MYLEAVE_ID}
+	</update>
+	
+		<!-- 修改 状态-->
+	<update id="accept" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = '1'
+		 where 
+		MYLEAVE_ID = #{MYLEAVE_ID} 
+	</update>
+	
+	<!-- 修改 状态-->
+	<update id="reject" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = '2'
+		 where 
+		MYLEAVE_ID = #{MYLEAVE_ID} 
 	</update>
 	
 	<!-- 通过ID获取数据 -->
@@ -78,6 +104,7 @@
 		select
 			l.USERNAME,	
 			l.TYPE,	
+			l.STATUS,	
 			l.STARTTIME,	
 			l.ENDTIME,	
 			l.WHENLONG,	

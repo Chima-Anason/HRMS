@@ -25,6 +25,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							
+							
 						<!-- 检索  -->
 						<form action="myleave/list.do" method="post" name="Form" id="Form">
 						
@@ -82,13 +83,13 @@
 											<td class='left'>${var.ENDTIME}</td>
 											<td class='left'>${var.WHENLONG}</td>
 											<td class='left'><a onclick="viewUser('${var.USERNAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${var.USERNAME}</a></td>
-											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">拒绝</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">接受</span></c:if></td>
+											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">拒绝</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">接受</span></c:if><c:if test="${var.STATUS == '' or var.STATUS == null }"><h7 class="green">正在运行</h7><img src="static/images/runing.gif" width="12px;" /></c:if></td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUZ}','${var.MYLEAVE_ID}','${var.USER_ID}');">
+													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${var.MYLEAVE_ID}','${var.USER_ID}');">
 														<i class="ace-icon fa fa-search nav-search-icon"></i>
 													</a>
 													<c:if test="${QX.del == 1 }">
@@ -282,18 +283,24 @@
 		
 		//查看信件
 		function viewx(ztid,STATUS,Id,USER_ID){
-			if(STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">拒绝</span>'){
+			/* if(STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">拒绝</span>'){
 				$("#"+ztid).html('<span class="label label-success arrowed">接受</span>');
 				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
-			}
+			} */
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>assignTraining/goView.do?MYLEAVE_ID='+Id+'&USER_ID='+USER_ID+'&STATUS='+STATUS;
+			 diag.URL = '<%=basePath%>myleave/goView.do?MYLEAVE_ID='+Id+'&USER_ID='+USER_ID+'&STATUS='+STATUS;
 			 diag.Width = 600;
 			 diag.Height = 300;
+			 diag.Modal = true;				//有无遮罩窗口
+			 diag. ShowMaxButton = true;	//最大化按钮
+		     diag.ShowMinButton = true;		//最小化按钮 
 			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 tosearch();
+				}
 				diag.close();
 			 };
 			 diag.show();
@@ -371,6 +378,6 @@
 		
 	</script>
 
-
+</div>
 </body>
 </html>

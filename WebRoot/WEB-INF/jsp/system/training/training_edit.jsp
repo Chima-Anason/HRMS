@@ -146,7 +146,7 @@
 				$("#ENDTIME").focus();
 			return false;
 			}
-			if($("#ENDTIME").val() < $("#STARTTIME").val){
+			if($("#ENDTIME").val() < $("#STARTTIME").val()){
 				$("#ENDTIME").tips({
 					side:3,
 		            msg:'结束时间不能小于开始时间',

@@ -1,8 +1,11 @@
 package com.fh.service.fhoa.myleave.impl;
 
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
+
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
@@ -41,6 +44,22 @@ public class MyleaveService implements MyleaveManager{
 	 */
 	public void edit(PageData pd)throws Exception{
 		dao.update("MyleaveMapper.edit", pd);
+	}
+	
+	/**修改状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void accept(PageData pd)throws Exception{
+		dao.update("MyleaveMapper.accept", pd);
+	}
+	
+	/**修改状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void reject(PageData pd)throws Exception{
+		dao.update("MyleaveMapper.reject", pd);
 	}
 	
 	/**列表
