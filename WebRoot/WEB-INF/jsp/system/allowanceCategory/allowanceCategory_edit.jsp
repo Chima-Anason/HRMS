@@ -21,20 +21,26 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
-						<form action="category/${msg}.do" name="form1" id="form1"  method="post">
-						<input type="hidden" name="CATEGORY_ID" id="id" value="${pd.CATEGORY_ID}"/>
+						<form action="allowanceCategory/${msg}.do" name="form1" id="form1"  method="post">
+						<input type="hidden" name="CAT_ID" id="id" value="${pd.CAT_ID}"/>
 						<input name="PARENT_ID" id="parent_id" value="${pd.parent_id }" type="hidden">
 							<div id="zhongxin" style="padding-top:13px;">
-							<table class="center" style="width:100%;">
-								<tr style="text-align: center;">
-									<td><input type="text" name="CATEGORY_NAME" id="categoryName" placeholder="这里输入名称" value="${pd.CATEGORY_NAME}"  title="名称" style="width:99%;"/></td>
+							<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top:15px;">
+								
+								<tr>
+								<td style="width:70px;text-align: right;padding-top: 13px;">津贴名称:</td>
+								<td><input type="text" name="CAT_NAME" id="categoryName" value="${pd.CAT_NAME}" maxlength="70" placeholder="这里输入津贴名称" title="津贴名称" style="width:98%;"/></td>
 								</tr>
 								<tr>
-									<td style="text-align: center;padding-top:5px;">
-										<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-										<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-									</td>
+								<td style="width:70px;text-align: right;padding-top: 13px;">英文名:</td>
+								<td><input type="text" name="EN_NAME" id="englishName" value="${pd.EN_NAME}" maxlength="70" placeholder="这里输入英文名" title="英文名称" style="width:98%;"/></td>
 								</tr>
+								<tr>
+								<td class="center" colspan="10">
+									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+								</td>
+							</tr>
 							</table>
 							</div>
 						</form>
@@ -62,17 +68,27 @@
 	top.hangge();
 	//保存
 	function save(){
-		if($("#categoryName").val()==""){
+		 if($("#categoryName").val()==""){
 			$("#categoryName").tips({
 				side:3,
-	            msg:'请输入',
+	            msg:'请输入津贴名称',
 	            bg:'#AE81FF',
 	            time:2
 	        });
-	    
 			$("#categoryName").focus();
 			return false;
 		}
+		 if($("#englishName").val()==""){
+			$("#englishName").tips({
+				side:3,
+	            msg:'请输入英文名',
+	            bg:'#AE81FF',
+	            time:2
+	        });
+			$("#englishName").focus();
+			return false;
+		}
+		
 			$("#form1").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

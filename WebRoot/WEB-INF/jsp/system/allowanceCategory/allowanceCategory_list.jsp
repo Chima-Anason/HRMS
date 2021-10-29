@@ -32,7 +32,7 @@
 						<div class="col-xs-12">
 						
 						<!-- 检索  -->
-						<form action="room/listRooms.do" method="post" name="roomForm" id="roomForm">
+						<form action="allowanceCategory/listAllowancesCategory.do" method="post" name="allowanceCategoryForm" id="allowanceCategoryForm">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -43,8 +43,8 @@
 									</span>
 									</div>
 								</td>
-			
-								<td style="vertical-align:top;padding-left:2px;">
+								
+								<%-- <td style="vertical-align:top;padding-left:2px;">
 								 	<select class="chosen-select form-control" name="CATEGORY_ID" id="category_id" data-placeholder="请选择角色" style="vertical-align:top;width: 120px;">
 									<option value=""></option>
 									<option value="">全部</option>
@@ -52,11 +52,11 @@
 										<option value="${category.CATEGORY_ID }" <c:if test="${pd.CATEGORY_ID==category.CATEGORY_ID}">selected</c:if>>${category.CATEGORY_NAME }</option>
 									</c:forEach>
 								  	</select>
-								</td>
+								</td> --%>
+			
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
-								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
-								<c:if test="${QX.FromExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="fromExcel();" title="从EXCEL导入"><i id="nav-search-icon" class="ace-icon fa fa-cloud-upload bigger-110 nav-search-icon blue"></i></a></td></c:if>
+						
 								</c:if>
 							</tr>
 						</table>
@@ -69,11 +69,8 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">编号</th>
-									<th class="center">具体名称（门牌号）</th>
-									<th class="center">子类别</th>
-									<th class="center">上次房间名称</th>
-									<th class="center">使用单位或具体位置</th>
+									<th class="center">津贴名称</th>
+									<th class="center">英文名</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -82,22 +79,18 @@
 								
 							<!-- 开始循环 /Start the cycle-->	
 							<c:choose>
-								<c:when test="${not empty roomList}">
+								<c:when test="${not empty allowanceCategoryList}">
 									<c:if test="${QX.cha == 1 }">
-									<c:forEach items="${roomList}" var="room" varStatus="vs">
+									<c:forEach items="${allowanceCategoryList}" var="allowanceCategory" varStatus="vs">
 												
 										<tr>
 											<td class='center' style="width: 30px;">
-												<c:if test="${user.USERNAME != 'admin'}"><label><input type='checkbox' name='ids' value="${room.ROOM_ID }" id="${room.ROOM_NO}" title="${room.ROOM_NAME}" class="ace"/><span class="lbl"></span></label></c:if>
+												<c:if test="${user.USERNAME != 'admin'}"><label><input type='checkbox' name='ids' value="${allowanceCategory.CAT_ID }" id="${allowanceCategory.CAT_NAME}" title="${allowanceCategory.EN_NAME}" class="ace"/><span class="lbl"></span></label></c:if>
 												<%-- <c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if> --%>
 											</td>
 											<td class='center' style="width:30px;">${vs.index+1}</td>
-											<td class="center">${room.ROOM_NO }</td>
-											<td class="center"><a onclick="viewRoom('${room.ROOM_NAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${room.ROOM_NAME}</a></td>
-											
-											<td class="center">${room.CATEGORY_NAME }</td>
-											<td class="center">${room.LAST_ROOM_NAME }</td>
-											<td class="center">${room.NOTE }</td>
+											<td class="center">${allowanceCategory.CAT_NAME }</td>
+											<td class="center">${allowanceCategory.EN_NAME }</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -106,12 +99,12 @@
 		
 													
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="editRoom('${room.ROOM_ID}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${allowanceCategory.CAT_ID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="delRoom('${room.ROOM_ID }','${room.ROOM_NAME }');">
+													<a class="btn btn-xs btn-danger" onclick="del('${allowanceCategory.CAT_ID }','${allowanceCategory.CAT_NAME }');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
@@ -125,7 +118,7 @@
 															
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="editRoom('${room.ROOM_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${allowanceCategory.CAT_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -134,7 +127,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="delRoom('${room.ROOM_ID }','${room.ROOM_NAME }');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${allowanceCategory.CAT_ID }','${allowanceCategory.CAT_NAME }');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -221,7 +214,7 @@ $(top.hangge());
 //检索
 function searchs(){
 	top.jzts();
-	$("#roomForm").submit();
+	$("#allowanceCategoryForm").submit();
 }
 
 
@@ -229,12 +222,13 @@ function searchs(){
 
 
 //删除
-function delRoom(roomId,msg){
+function del(categoryId,msg){
 	bootbox.confirm("确定要删除["+msg+"]吗?", function(result) {
 		if(result) {
 			top.jzts();
-			var url = "<%=basePath%>room/deleteU.do?ROOM_ID="+roomId+"&tm="+new Date().getTime();
+			var url = "<%=basePath%>allowanceCategory/deleteU.do?CAT_ID="+categoryId+"&tm="+new Date().getTime();
 			$.get(url,function(data){
+			
 				nextPage(${page.currentPage});
 			});
 		};
@@ -247,9 +241,9 @@ function add(){
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="新增";
-	 diag.URL = '<%=basePath%>room/goAddU.do';
-	 diag.Width = 469;
-	 diag.Height = 580;
+	 diag.URL = '<%=basePath%>allowanceCategory/goAddU.do';
+	 diag.Width = 700;
+	 diag.Height = 200;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 			 if('${page.currentPage}' == '0'){
@@ -265,14 +259,14 @@ function add(){
 }
 
 //修改
-function editRoom(room_id){
+function edit(category_id){
 	 top.jzts();
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="资料";
-	 diag.URL = '<%=basePath%>room/goEditU.do?ROOM_ID='+room_id;
-	 diag.Width = 469;
-	 diag.Height = 580;
+	 diag.URL = '<%=basePath%>allowanceCategory/goEditU.do?CAT_ID='+category_id;
+	 diag.Width = 700;
+	 diag.Height = 200;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 			nextPage(${page.currentPage});
@@ -324,8 +318,8 @@ function makeAll(msg){
 					top.jzts();
 					$.ajax({
 						type: "POST",
-						url: '<%=basePath%>room/deleteAllU.do?tm='+new Date().getTime(),
-				    	data: {ROOM_IDS:str},
+						url: '<%=basePath%>allowanceCategory/deleteAllU.do?tm='+new Date().getTime(),
+				    	data: {CAT_IDS:str},
 						dataType:'json',
 						//beforeSend: validateData,
 						cache: false,
@@ -390,8 +384,8 @@ $(function() {
 //导出excel
 		function toExcel(){
 			var keywords = $("#nav-search-input").val();
-			var ROOM_ID = $("#ROOM_ID").val();
-			window.location.href='<%=basePath%>room/excel.do?keywords='+keywords+'&ROOM_ID='+ROOM_ID;
+			var CATEGORY_ID = $("#CATEGORY_ID").val();
+			window.location.href='<%=basePath%>buildingCategory/excel.do?keywords='+keywords+'&CATEGORY_ID='+CATEGORY_ID;
 	    }
 	    
 	    
@@ -401,7 +395,7 @@ function fromExcel(){
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="EXCEL 导入到数据库";
-	 diag.URL = '<%=basePath%>room/goUploadExcel.do';
+	 diag.URL = '<%=basePath%>buildingCategory/goUploadExcel.do';
 	 diag.Width = 300;
 	 diag.Height = 150;
 	 diag.CancelEvent = function(){ //关闭事件
@@ -419,7 +413,7 @@ function fromExcel(){
 }	
 
 //查看用户
-function viewRoom(ROOM_NAME){
+function viewAllowanceCategory(CATEGORY_NAME){
 	/* if('admin' == USERNAME){
 		bootbox.dialog({
 			message: "<span class='bigger-110'>不能查看admin用户!</span>",
@@ -432,9 +426,9 @@ function viewRoom(ROOM_NAME){
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="资料";
-	 diag.URL = '<%=basePath%>room/view.do?ROOM_NAME='+ROOM_NAME;
-	 diag.Width = 469;
-	 diag.Height = 380;
+	 diag.URL = '<%=basePath%>allowanceCategory/view.do?CATEGORY_NAME='+CATEGORY_NAME;
+	 diag.Width = 330;
+	 diag.Height = 330;
 	 diag.CancelEvent = function(){ //关闭事件
 		diag.close();
 	 };

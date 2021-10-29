@@ -183,7 +183,7 @@ public class MyleaveController extends AcStartController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = myleaveService.findById(pd);	//根据ID读取
-		
+		//check if the viewer is Admin and enable the ACCEPT/REJECT Button if not Admin disable
 		String user = Jurisdiction.getUsername();
 		pd.put("user", user);
 		mv.setViewName("fhoa/myleave/myleave_view");

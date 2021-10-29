@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayrollMapper">
+	
+	<resultMap type="Payroll" id="payrollResultMap">
+		<id column="SALARY_ID" property="SALARY_ID"/>
+		<result column="USER_ID" property="USER_ID"/>
+		<result column="SALARY_AMOUNT" property="SALARY_AMOUNT"/>
+		<result column="NET_SALARY" property="NET_SALARY"/>
+		<result column="ALLOWANCE1" property="ALLOWANCE1"/>
+		<result column="ALLOWANCE1_AMOUNT" property="ALLOWANCE1_AMOUNT"/>
+		<result column="ALLOWANCE2" property="ALLOWANCE2"/>
+		<result column="ALLOWANCE2_AMOUNT" property="ALLOWANCE2_AMOUNT"/>
+		<result column="DEDUCTION1" property="DEDUCTION1"/>
+		<result column="DEDUCTION1_AMOUNT" property="DEDUCTION1_AMOUNT"/>
+		<result column="DEDUCTION2" property="DEDUCTION2"/>
+		<result column="DEDUCTION2_AMOUNT" property="DEDUCTION2_AMOUNT"/>
+		<result column="DATE" property="DATE"/>
+		<result column="STATUS" property="STATUS"/>
+		
+	</resultMap>	
+	<!--表名 -->
+	<sql id="tableName">
+		sys_payroll
+	</sql>
+	
+	
+	<sql id="sal_CatTableName">
+		sys_SalaryCat
+	</sql>
+	<sql id="userTableName">
+		SYS_USER
+	</sql>
+	
+	
+	<sql id="departmentTableName">
+		oa_department
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		SALARY_ID,
+		USER_ID,
+		SALARY_AMOUNT,
+		NET_SALARY,	
+		ALLOWANCE1,	
+		ALLOWANCE1_AMOUNT,	
+		ALLOWANCE2,	
+		ALLOWANCE2_AMOUNT,	
+		DEDUCTION1,	
+		DEDUCTION1_AMOUNT,	
+		DEDUCTION2,	
+		DEDUCTION2_AMOUNT,
+		DATE,
+		STATUS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	    #{SALARY_ID},
+		#{USER_ID},
+		#{SALARY_AMOUNT},
+		#{NET_SALARY},	
+		#{ALLOWANCE1},	
+		#{ALLOWANCE1_AMOUNT},	
+		#{ALLOWANCE2},	
+		#{ALLOWANCE2_AMOUNT},	
+		#{DEDUCTION1},	
+		#{DEDUCTION1_AMOUNT},	
+		#{DEDUCTION2},	
+		#{DEDUCTION2_AMOUNT},	
+		#{DATE},	
+		#{STATUS}
+	</sql>
+	
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			SALARY_ID = #{SALARY_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			SALARY_AMOUNT = #{SALARY_AMOUNT},
+			NET_SALARY = #{NET_SALARY},
+			ALLOWANCE1 = #{ALLOWANCE1},
+			ALLOWANCE1_AMOUNT = #{ALLOWANCE1_AMOUNT},
+			ALLOWANCE2 = #{ALLOWANCE2},
+			ALLOWANCE2_AMOUNT = #{ALLOWANCE2_AMOUNT},
+			DEDUCTION1 = #{DEDUCTION1},
+			DEDUCTION1_AMOUNT = #{DEDUCTION1_AMOUNT},
+			DEDUCTION2 = #{DEDUCTION2},
+			DEDUCTION2_AMOUNT = #{DEDUCTION2_AMOUNT},
+			DATE = #{DATE},
+			USER_ID = #{USER_ID}
+		where 
+			SALARY_ID = #{SALARY_ID}
+	</update>
+	
+	<!-- 修改 状态-->
+	<update id="editStatus" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = '1'
+		 where 
+		SALARY_ID = #{SALARY_ID} 
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			SALARY_ID = #{SALARY_ID}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select  s.SALARY_ID,
+				s.STATUS,
+				s.DATE,
+				s.SALARY_AMOUNT,
+				s.NET_SALARY,
+				s.ALLOWANCE1_AMOUNT,
+				s.ALLOWANCE2_AMOUNT,
+				s.DEDUCTION1_AMOUNT,
+				s.DEDUCTION2_AMOUNT,
+				s.USER_ID,
+				u.USERNAME,
+				d.NAME as DEPARTMENTNAME,
+				u.BIANMA
+				
+		from <include refid="tableName"></include> s
+		left join <include refid="userTableName"></include> u on s.USER_ID = u.USER_ID
+		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
+		
+		 where s.USER_ID = u.USER_ID
+		  
+		 <if test="pd.USERNAME!= null and pd.USERNAME != ''">
+			and u.USERNAME = #{pd.USERNAME}
+		</if> 
+		
+		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
+			and
+				(
+					 s.STATUS LIKE '%'+#{pd.keywords}+'%'
+					 or
+					 s.SALARY_AMOUNT LIKE '%'+#{pd.keywords}+'%'
+					 or
+					 u.USERNAME LIKE '%'+#{pd.keywords}+'%'
+					  or
+					 u.BIANMA LIKE '%'+#{pd.keywords}+'%'
+	
+				)
+		</if>
+		
+		<if test="pd.STATUS!=null and pd.STATUS!=''">
+			and s.STATUS = #{pd.STATUS} 
+		</if>
+	</select>
+	
+	
+	<!-- 批量删除用户 -->
+	<delete id="deleteAll" parameterType="String" >
+		delete from <include refid="tableName"></include>
+		where 
+			SALARY_ID in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+        and
+			SALARY_ID &lt;&gt; '1'
+	</delete>
+	
+	
+	
+	<!-- fh313596790qq(青苔) -->
+</mapper>

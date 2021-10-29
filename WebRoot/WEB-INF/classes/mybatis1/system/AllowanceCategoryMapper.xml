@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AllowanceCategoryMapper">
+
+	<resultMap type="SalaryCategory" id="allowanceCategoryResultMap">
+		<id column="CAT_ID" property="CAT_ID"/>
+		<result column="CAT_NAME" property="CAT_NAME"/>
+		<result column="EN_NAME" property="EN_NAME"/>
+	</resultMap>
+
+	<!-- Field -->
+	<sql id="Field">
+				CAT_ID,
+				CAT_NAME,
+				PARENT_ID,
+				EN_NAME
+	</sql>
+
+	<!-- Field value -->
+	<sql id="FieldValue">
+				#{CAT_ID},
+				#{CAT_NAME},
+				#{PARENT_ID},
+				#{EN_NAME}
+	</sql>
+
+	<!--Table Name -->
+	<sql id="tableName">
+		SYS_SalaryCat
+	</sql>
+
+	<!-- Get the data from the category name -->
+	<select id="findByCategory_Name" parameterType="pd" resultType="pd" >
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		CAT_NAME = #{CAT_NAME}
+		and
+		PARENT_ID = '01'
+	</select>
+	
+
+	<!--List all allowance category by parent Id -->
+	<select id="listAllowanceCategoryByParentId"  parameterType="pd" resultType="pd" >
+		select CAT_ID
+		from
+		<include refid="tableName"></include>
+		where
+		PARENT_ID = #{PARENT_ID}
+	</select>
+
+	<!--List of allowance category-->
+	<select id="allowanceCategorylistPage" parameterType="page" resultType="pd" >
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where PARENT_ID = '01'
+
+		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
+			and
+			(
+			EN_NAME LIKE '%'+#{pd.keywords}+'%'
+			or
+			CAT_NAME LIKE '%'+#{pd.keywords}+'%'
+			)
+		</if>
+		
+	</select>
+
+
+
+	<!-- 通过编号获取数据 -->
+	<select id="findByCategoryName" parameterType="pd" resultType="pd" >
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		CAT_NAME = #{CAT_NAME}
+		and
+		PARENT_ID = '01'
+	</select>
+
+	<!-- Get the data by category_id -->
+	<select id="findById" parameterType="pd" resultType="pd" >
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		CAT_ID = #{CAT_ID}
+	</select>
+
+	<!-- New category -->
+	<insert id="saveU" parameterType="pd" >
+		insert into <include refid="tableName"></include> (
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	
+	<!-- 修改 -->
+	<update id="editU" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			CAT_NAME = #{CAT_NAME},
+			EN_NAME = #{EN_NAME}
+		where 
+			CAT_ID = #{CAT_ID}
+	</update>
+
+
+
+	<!-- Delete allowanceCategory -->
+	<delete id="deleteU" parameterType="pd" flushCache="false">
+		delete from
+		<include refid="tableName"></include>
+		where CAT_ID=#{CAT_ID}
+	</delete>
+
+	<!-- Batch delete allowanceCategory -->
+	<delete id="deleteAllU" parameterType="String" >
+		delete from <include refid="tableName"></include>
+		where
+		CAT_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and
+		CAT_ID &lt;&gt; '1'
+	</delete>
+
+	<!-- allowanceCategory list (all) -->
+	<select id="listAllAllowanceCategory" parameterType="pd" resultType="pd" >
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where PARENT_ID = '01'
+		<if test="keywords!= null and keywords != ''"><!-- Keyword search -->
+			and
+			(
+			EN_NAME LIKE '%'+#{keywords}+'%'
+			or
+			CAT_NAME LIKE '%'+#{keywords}+'%'
+			)
+		</if>
+
+	</select>
+
+	<!-- List allowances category for Salary -->
+	<select id="listAllAllowancesCategory" resultMap="allowanceCategoryResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where PARENT_ID = '01'
+	</select>
+
+
+
+	<!-- Get the data from the category name for excel file in allowance table-->
+	<select id="findByCategory_NameForExcel" parameterType="string" resultType="string" >
+		select CAT_ID
+		from
+		<include refid="tableName"></include>
+		where
+		CAT_NAME = #{CAT_NAME}
+		and
+		PARENT_ID = '01'
+	</select>
+
+
+
+	<!-- ANAGRACE TECH(青苔) -->
+</mapper>

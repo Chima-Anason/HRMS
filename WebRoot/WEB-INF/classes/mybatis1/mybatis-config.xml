@@ -19,6 +19,8 @@
 		<typeAlias type="com.fh.entity.system.AssignTraining" alias="AssignTraining"/>
 		<typeAlias type="com.fh.entity.system.Bank" alias="Bank"/>
 		<typeAlias type="com.fh.entity.system.Department" alias="Department"/>
+		<typeAlias type="com.fh.entity.system.SalaryCategory" alias="SalaryCategory"/>
+		<typeAlias type="com.fh.entity.system.Payroll" alias="Payroll"/>
 		<typeAlias type="com.fh.util.PageData" alias="pd"/>
 		<!-- 分页 -->
 		<typeAlias type="com.fh.entity.Page" alias="Page"/>
