@@ -81,6 +81,16 @@
       BANK_ID = #{BANK_ID}
   </select>
   
+  <!-- 通过ID获取数据 -->
+  <select id="findByUserId" parameterType="pd" resultType="pd">
+    select 
+    <include refid="Field"></include>
+    from 
+    <include refid="tableName"></include>
+    where
+      USER_ID = #{USER_ID}
+  </select>
+  
   <!-- Get the data from the acc number -->
 	<select id="findByAcc_No" parameterType="pd" resultType="pd" >
 		select 

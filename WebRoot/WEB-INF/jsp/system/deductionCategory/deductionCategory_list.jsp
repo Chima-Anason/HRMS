@@ -79,8 +79,8 @@
 												<%-- <c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if> --%>
 											</td>
 											<td class='center' style="width:30px;">${vs.index+1}</td>
-											<td class="center">${deductionCategory.CAT_NAME }</td>
-											<td class="center">${deductionCategory.EN_NAME }</td>
+											<td class="left">${deductionCategory.CAT_NAME }</td>
+											<td class="left">${deductionCategory.EN_NAME }</td>
 											<%-- <td class="center"><a onclick="viewCategory('${roomCategory.CATEGORY_NAME}')" style="cursor:pointer;"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i>${roomCategory.CATEGORY_NAME}</a></td> --%>
 	
 											<td class="center">

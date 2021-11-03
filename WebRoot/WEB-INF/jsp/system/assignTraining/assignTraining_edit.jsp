@@ -33,6 +33,15 @@
 						<textarea style="display: none;" name="TRAINING_IDS" id="TRAINING_IDS" >${pd.TRAINING_IDS }</textarea>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
+							<tr>
+
+  								<td style="width:79px;text-align: right;padding-top: 13px;">用户:</td>
+  								<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
+  								<td id="juese3"><button class="btn btn-outline-secondary" type="button" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
+							</tr>
+						
+						</table>
+						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<c:if test="${fx != 'head'}">
 										<tr>
 											<td style="width:79px;text-align: right;padding-top: 13px;">培训:</td>
@@ -50,16 +59,11 @@
 											<input name="TRAINING_ID" id="training_id" value="${pd.TRAINING_ID }" type="hidden" />
 										</c:if>
 							<c:if test="${fx != 'head'}">
-										<tr>
-
-  												<td style="width:79px;text-align: right;padding-top: 13px;">用户:</td>
-  												<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-  												<td id="juese3"><button class="btn btn-outline-secondary" type="button" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
-										</tr>
+										
 								<tr>
 								</c:if>
 										<c:if test="${fx == 'head'}">
-											<input name="USER_ID" id="user_id" value="${pd.user_id }" type="hidden" />
+											<input name="USERNAME" id="USERNAME" value="${pd.USERNAME }" type="hidden" />
 										</c:if>
 								<c:if test="${fx != 'head'}">
 										<tr>

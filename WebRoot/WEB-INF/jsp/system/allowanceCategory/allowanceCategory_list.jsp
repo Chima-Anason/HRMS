@@ -89,8 +89,8 @@
 												<%-- <c:if test="${user.USERNAME == 'admin'}"><label><input type='checkbox' disabled="disabled" class="ace" /><span class="lbl"></span></label></c:if> --%>
 											</td>
 											<td class='center' style="width:30px;">${vs.index+1}</td>
-											<td class="center">${allowanceCategory.CAT_NAME }</td>
-											<td class="center">${allowanceCategory.EN_NAME }</td>
+											<td class="left">${allowanceCategory.CAT_NAME }</td>
+											<td class="left">${allowanceCategory.EN_NAME }</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>

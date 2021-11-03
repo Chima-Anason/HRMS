@@ -17,6 +17,9 @@
 		<result column="DEDUCTION2_AMOUNT" property="DEDUCTION2_AMOUNT"/>
 		<result column="DATE" property="DATE"/>
 		<result column="STATUS" property="STATUS"/>
+		<result column="TOTAL_ALLOWANCE" property="TOTAL_ALLOWANCE"/>
+		<result column="TOTAL_DEDUCTION" property="TOTAL_DEDUCTION"/>
+		<result column="SEND_TIME" property="SEND_TIME"/>
 		
 	</resultMap>	
 	<!--表名 -->
@@ -52,7 +55,10 @@
 		DEDUCTION2,	
 		DEDUCTION2_AMOUNT,
 		DATE,
-		STATUS
+		STATUS,
+		TOTAL_ALLOWANCE,
+		TOTAL_DEDUCTION,
+		SEND_TIME
 	</sql>
 	
 	<!-- 字段值 -->
@@ -70,7 +76,10 @@
 		#{DEDUCTION2},	
 		#{DEDUCTION2_AMOUNT},	
 		#{DATE},	
-		#{STATUS}
+		#{STATUS},
+		#{TOTAL_ALLOWANCE},
+		#{TOTAL_DEDUCTION},
+		#{SEND_TIME}
 	</sql>
 	
 	
@@ -109,14 +118,17 @@
 			DEDUCTION1_AMOUNT = #{DEDUCTION1_AMOUNT},
 			DEDUCTION2 = #{DEDUCTION2},
 			DEDUCTION2_AMOUNT = #{DEDUCTION2_AMOUNT},
+			TOTAL_ALLOWANCE = #{TOTAL_ALLOWANCE},
+			TOTAL_DEDUCTION = #{TOTAL_DEDUCTION},
 			DATE = #{DATE},
+			SEND_TIME = #{SEND_TIME},
 			USER_ID = #{USER_ID}
 		where 
 			SALARY_ID = #{SALARY_ID}
 	</update>
 	
 	<!-- 修改 状态-->
-	<update id="editStatus" parameterType="pd">
+	<update id="accept" parameterType="pd">
 		update
 		<include refid="tableName"></include>
 		set 
@@ -136,17 +148,37 @@
 	</select>
 	
 	
+	<!-- 通过ID获取数据 -->
+	<select id="findValueByIdForView" parameterType="pd" resultType="pd">
+		select  s.SALARY_ID,
+				s.USER_ID,
+				u.USERNAME,
+				d.NAME as DEPARTMENTNAME,
+				u.BIANMA
+		from <include refid="tableName"></include> s
+		left join <include refid="userTableName"></include> u on s.USER_ID = u.USER_ID
+		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
+		
+		where 
+			SALARY_ID = #{SALARY_ID}
+		and s.USER_ID = u.USER_ID
+	</select>
+	
+	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select  s.SALARY_ID,
 				s.STATUS,
 				s.DATE,
+				s.SEND_TIME,
 				s.SALARY_AMOUNT,
 				s.NET_SALARY,
 				s.ALLOWANCE1_AMOUNT,
 				s.ALLOWANCE2_AMOUNT,
 				s.DEDUCTION1_AMOUNT,
 				s.DEDUCTION2_AMOUNT,
+				s.TOTAL_ALLOWANCE,
+				s.TOTAL_DEDUCTION,
 				s.USER_ID,
 				u.USERNAME,
 				d.NAME as DEPARTMENTNAME,
@@ -179,6 +211,9 @@
 		<if test="pd.STATUS!=null and pd.STATUS!=''">
 			and s.STATUS = #{pd.STATUS} 
 		</if>
+		<if test="pd.DATE!=null and pd.DATE!=''">
+			and s.DATE &gt;= #{pd.DATE} 
+		</if>
 	</select>
 	
 	
@@ -193,6 +228,32 @@
         and
 			SALARY_ID &lt;&gt; '1'
 	</delete>
+	
+	<!-- List payrolls -->
+	<select id="listAllPayrolls" resultMap="payrollResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 列表(全部) -->
+  <select id="listForExcel" parameterType="pd" resultType="pd">
+   		select  s.SALARY_ID,
+				s.DATE,
+				s.SALARY_AMOUNT,
+				s.NET_SALARY,
+				s.TOTAL_ALLOWANCE,
+				s.TOTAL_DEDUCTION,
+				s.USER_ID,
+				u.USERNAME,
+				d.NAME as DEPARTMENTNAME,
+				u.BIANMA
+				
+		from <include refid="tableName"></include> s
+		left join <include refid="userTableName"></include> u on s.USER_ID = u.USER_ID
+		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
+  </select>
 	
 	
 	

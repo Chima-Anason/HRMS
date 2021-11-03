@@ -70,6 +70,14 @@ public class BankService implements BankManager {
     return (PageData)dao.findForObject("BankMapper.findById", pd);
   }
   
+  /**通过id获取数据
+   * @param pd
+   * @throws Exception
+   */
+  public PageData findByUserId(PageData pd)throws Exception{
+    return (PageData)dao.findForObject("BankMapper.findByUserId", pd);
+  }
+  
   /**批量删除
    * @param ArrayDATA_IDS
    * @throws Exception

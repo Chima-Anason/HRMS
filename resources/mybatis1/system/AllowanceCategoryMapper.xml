@@ -155,7 +155,7 @@
 
 	</select>
 
-	<!-- List allowances category for Salary -->
+	<!-- List allowances category for Salary to select -->
 	<select id="listAllAllowancesCategory" resultMap="allowanceCategoryResultMap">
 		select
 		<include refid="Field"></include>

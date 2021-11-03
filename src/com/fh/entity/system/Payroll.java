@@ -26,7 +26,10 @@ public class Payroll {
 	private String DEDUCTION1_AMOUNT;
 	private String DEDUCTION2;
 	private String DEDUCTION2_AMOUNT;
+	private String TOTAL_ALLOWANCE;
+	private String TOTAL_DEDUCTION;
 	private String DATE;
+	private String SEND_TIME;
 	private String STATUS;
 	
 	public String getSALARY_ID() {
@@ -113,6 +116,25 @@ public class Payroll {
 	public void setSTATUS(String sTATUS) {
 		STATUS = sTATUS;
 	}
+	public String getTOTAL_ALLOWANCE() {
+		return TOTAL_ALLOWANCE;
+	}
+	public void setTOTAL_ALLOWANCE(String tOTAL_ALLOWANCE) {
+		TOTAL_ALLOWANCE = tOTAL_ALLOWANCE;
+	}
+	public String getTOTAL_DEDUCTION() {
+		return TOTAL_DEDUCTION;
+	}
+	public void setTOTAL_DEDUCTION(String tOTAL_DEDUCTION) {
+		TOTAL_DEDUCTION = tOTAL_DEDUCTION;
+	}
+	public String getSEND_TIME() {
+		return SEND_TIME;
+	}
+	public void setSEND_TIME(String sEND_TIME) {
+		SEND_TIME = sEND_TIME;
+	}
+	
 	
 	
 	

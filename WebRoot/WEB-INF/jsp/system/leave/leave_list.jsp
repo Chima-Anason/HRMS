@@ -214,7 +214,7 @@
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>leave/goAdd.do?DICTIONARIES_ID='+DICTIONARIES_ID;
 			 diag.Width = 500;
-			 diag.Height = 620;
+			 diag.Height = 404;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 if('${page.currentPage}' == '0'){
@@ -251,7 +251,7 @@
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>leave/goEdit.do?DICTIONARIES_ID='+Id;
 			 diag.Width = 500;
-			 diag.Height = 565;
+			 diag.Height = 404;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					nextPage(${page.currentPage});
