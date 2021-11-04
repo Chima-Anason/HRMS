@@ -59,6 +59,13 @@ public interface AssignTrainingManager{
 	public List<PageData> list(Page page)throws Exception;
 	
 	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	public List<PageData> historyList(Page page)throws Exception;
+	
+	
 	/**批量删除
 	 * @param ArrayDATA_IDS
 	 * @throws Exception

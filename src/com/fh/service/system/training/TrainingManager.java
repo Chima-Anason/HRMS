@@ -45,6 +45,12 @@ public interface TrainingManager{
 	 */
 	public void edit(PageData pd)throws Exception;
 	
+	/**修改STATUZ
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editStatus(PageData pd)throws Exception;
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception

@@ -58,6 +58,16 @@ public class TrainingService implements TrainingManager{
 		dao.update("TrainingMapper.edit", pd);
 	}
 	
+	
+	/**修改状态
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void editStatus(PageData pd)throws Exception{
+		dao.update("TrainingMapper.editStatus", pd);
+	}
+	
+	
 	/**列表
 	 * @param page
 	 * @throws Exception

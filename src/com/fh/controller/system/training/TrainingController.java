@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
+import com.fh.entity.system.Training;
 import com.fh.util.AppUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
@@ -56,17 +57,17 @@ public class TrainingController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("TRAINING_ID", this.get32UUID());	//主键
+		
 		//compare end time with current time to assign status
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+		Date ENDTIME = sdformat.parse(pd.getString("ENDTIME"));
+		Date CURRENTTIME = new Date();
 		
-	      SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-	      Date ENDTIME = sdformat.parse(pd.getString("ENDTIME"));
-	      Date CURRENTTIME = new Date();
-		
-	      if(ENDTIME.compareTo(CURRENTTIME) < 0) {
-	    	  pd.put("STATUS", "0");
-	      } else {
-	    	  pd.put("STATUS", "1");
-	      } 
+		if(ENDTIME.compareTo(CURRENTTIME) < 0) {
+			pd.put("STATUS", "0");
+		} else {
+			pd.put("STATUS", "1");
+		} 
 		
 		trainingService.save(pd);
 		mv.addObject("msg","success");
@@ -74,53 +75,7 @@ public class TrainingController extends BaseController {
 		return mv;
 	}
 	
-	
-	
-	/**列表(用于弹窗)
-	 * @param page
-	 * @return
-	 * @throws Exception 
-	 *//*
-	@RequestMapping(value="/listfortc")
-	public ModelAndView listfortc(Page page) throws Exception{
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		String KEYW = pd.getString("keyword");	//检索条件
-		if(null != KEYW && !"".equals(KEYW)){
-			pd.put("KEYW", KEYW.trim());
-		}
-		page.setPd(pd);
-		List<PageData>	varList = headmanService.list(page);	//列出Pictures列表
-		mv.setViewName("system/headman/headman_list_tc");
-		mv.addObject("varList", varList);
-		mv.addObject("pd", pd);
-		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
-		return mv;
-	}
-	*/
-	
-	/**To determine if the headman no exists
-	 * @return
-	 *//*
-	@RequestMapping(value="/hasN")
-	@ResponseBody
-	public Object hasN(){
-		Map<String,String> map = new HashMap<String,String>();
-		String errInfo = "success";
-		PageData pd = new PageData();
-		try{
-			pd = this.getPageData();
-			if(headmanService.findByHeadmanNo(pd) != null){
-				errInfo = "error";
-			}
-		} catch(Exception e){
-			logger.error(e.toString(), e);
-		}
-		map.put("result", errInfo);				//返回结果
-		return AppUtil.returnObject(new PageData(), map);
-	}
-	*/
+
 	
 	/**删除
 	 * @param out
@@ -186,6 +141,20 @@ public class TrainingController extends BaseController {
 		if(ENDTIME != null && !"".equals(ENDTIME)){
 			pd.put("ENDTIME", ENDTIME+" 00:00:00");
 		} 
+		
+		//updates on reload training list page (for each column in trainingList_s(compare end time with current time to update the status to be 0(finished/完成))) 
+		List<Training> trainingList_s = trainingService.listTrainingToSelect(pd);
+		for (int i=0; i < trainingList_s.size() ;i++) {
+			
+			 SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+		      Date endTime = sdformat.parse(trainingList_s.get(i).getENDTIME());
+		      Date CURRENTTIME = new Date();
+			if(endTime.compareTo(CURRENTTIME) < 0){
+				String training_id = trainingList_s.get(i).getTRAINING_ID();
+				pd.put("TRAINING_ID", training_id);
+				trainingService.editStatus(pd);
+			}
+		}
 		page.setPd(pd);
 		List<PageData>	varList = trainingService.list(page);	
 		mv.setViewName("system/training/training_list");
@@ -252,37 +221,6 @@ public class TrainingController extends BaseController {
 		return AppUtil.returnObject(pd, map);
 	}
 	
-	 /**导出到excel
-	 * @param
-	 * @throws Exception
-	 *//*
-	@RequestMapping(value="/excel")
-	public ModelAndView exportExcel() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"导出Headman到excel");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
-		ModelAndView mv = new ModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		Map<String,Object> dataMap = new HashMap<String,Object>();
-		List<String> titles = new ArrayList<String>();
-		titles.add("名称");	//1
-		titles.add("权限标识");	//2
-		titles.add("备注");	//3
-		dataMap.put("titles", titles);
-		List<PageData> varOList = headmanService.listAll(pd);
-		List<PageData> varList = new ArrayList<PageData>();
-		for(int i=0;i<varOList.size();i++){
-			PageData vpd = new PageData();
-			vpd.put("var1", varOList.get(i).getString("HEADMAN_NAME"));	//1
-			vpd.put("var2", varOList.get(i).getString("HEADMAN_NO"));	//2
-			vpd.put("var3", varOList.get(i).getString("CREATED_TIME"));	//3
-			varList.add(vpd);
-		}
-		dataMap.put("varList", varList);
-		ObjectExcelView erv = new ObjectExcelView();
-		mv = new ModelAndView(erv,dataMap);
-		return mv;
-	}*/
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder){

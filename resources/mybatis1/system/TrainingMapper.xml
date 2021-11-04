@@ -82,6 +82,16 @@
 			TRAINING_ID = #{TRAINING_ID}
 	</update>
 	
+	<!-- 修改 状态-->
+	<update id="editStatus" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = '0'
+		where 
+			TRAINING_ID = #{TRAINING_ID} 
+	</update>
+	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select 

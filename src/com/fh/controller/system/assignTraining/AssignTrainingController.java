@@ -81,53 +81,6 @@ public class AssignTrainingController extends BaseController {
 	}
 	
 	
-	
-	/**列表(用于弹窗)
-	 * @param page
-	 * @return
-	 * @throws Exception 
-	 *//*
-	@RequestMapping(value="/listfortc")
-	public ModelAndView listfortc(Page page) throws Exception{
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		String KEYW = pd.getString("keyword");	//检索条件
-		if(null != KEYW && !"".equals(KEYW)){
-			pd.put("KEYW", KEYW.trim());
-		}
-		page.setPd(pd);
-		List<PageData>	varList = headmanService.list(page);	//列出Pictures列表
-		mv.setViewName("system/headman/headman_list_tc");
-		mv.addObject("varList", varList);
-		mv.addObject("pd", pd);
-		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
-		return mv;
-	}
-	*/
-	
-	/**To determine if the headman no exists
-	 * @return
-	 *//*
-	@RequestMapping(value="/hasN")
-	@ResponseBody
-	public Object hasN(){
-		Map<String,String> map = new HashMap<String,String>();
-		String errInfo = "success";
-		PageData pd = new PageData();
-		try{
-			pd = this.getPageData();
-			if(headmanService.findByHeadmanNo(pd) != null){
-				errInfo = "error";
-			}
-		} catch(Exception e){
-			logger.error(e.toString(), e);
-		}
-		map.put("result", errInfo);				//返回结果
-		return AppUtil.returnObject(new PageData(), map);
-	}
-	*/
-	
 	/**删除
 	 * @param out
 	 * @throws Exception
@@ -156,11 +109,9 @@ public class AssignTrainingController extends BaseController {
 		pd = this.getPageData();
 		pd.put("STATUZ", "2");	
 		pd.put("SEND_TIME", DateUtil.getTime());				//发送时间
-		
 		userService.findById(pd);
 		String username = pd.getString("USERNAME");
 		pd.put("TO_USERNAME", username); 
-		
 		assignTrainingService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -182,6 +133,11 @@ public class AssignTrainingController extends BaseController {
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
+		
+		String STATUZ = pd.getString("STATUZ");				
+		if(null != STATUZ && !"".equals(STATUZ)){
+			pd.put("STATUZ", STATUZ);
+		}
 		String STARTTIME = pd.getString("STARTTIME");	//开始时间
 		String ENDTIME = pd.getString("ENDTIME");		//结束时间
 		if(STARTTIME != null && !"".equals(STARTTIME)){
@@ -190,6 +146,25 @@ public class AssignTrainingController extends BaseController {
 		if(ENDTIME != null && !"".equals(ENDTIME)){
 			pd.put("ENDTIME", ENDTIME+" 00:00:00");
 		} 
+		
+		//updates on reload AssignTraining list page (for each column in trainingList_s(compare end time with current time to update the status to be 0(finished/完成))) 
+		List<Training> trainingList_s = trainingService.listTrainingToSelect(pd);
+		for (int i=0; i < trainingList_s.size() ;i++) {
+
+			SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+			Date endTime = sdformat.parse(trainingList_s.get(i).getENDTIME());
+			Date CURRENTTIME = new Date();
+			if(endTime.compareTo(CURRENTTIME) < 0){
+				String status = trainingList_s.get(i).getSTATUS();
+				if(status != "0"){
+					String training_id = trainingList_s.get(i).getTRAINING_ID();
+					pd.put("TRAINING_ID", training_id);
+					trainingService.editStatus(pd);
+				}
+			}
+		}
+		
+		//Error to be noted
 		/*String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
 		System.out.println("curuser is : " + curUser);*/
 		// user can only see his training
@@ -202,15 +177,80 @@ public class AssignTrainingController extends BaseController {
 		/*pd.put("curUser", "admin");*/
 		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
 		page.setPd(pd);
-		
+
 		List<PageData>	varList = assignTrainingService.list(page);
-		System.out.println("ASS_ID is : " + pd.getString("ASS_ID"));
-		//List<Training> trainingList = trainingService.listTrainingToSelect(pd);
-		//List<User> userList = userService.listAllUsers(pd);
 		mv.setViewName("system/assignTraining/assignTraining_list");
 		mv.addObject("varList", varList);
-		//mv.addObject("trainingList", trainingList);
-		//mv.addObject("userList", userList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	
+	
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/historyList")
+	public ModelAndView historyList(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表AssignTraining(完成的培训)");
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		String STATUZ = pd.getString("STATUZ");				
+		if(null != STATUZ && !"".equals(STATUZ)){
+			pd.put("STATUZ", STATUZ);
+		}
+		String STARTTIME = pd.getString("STARTTIME");	//开始时间
+		String ENDTIME = pd.getString("ENDTIME");		//结束时间
+		if(STARTTIME != null && !"".equals(STARTTIME)){
+			pd.put("STARTTIME", STARTTIME+" 00:00:00");
+		}
+		if(ENDTIME != null && !"".equals(ENDTIME)){
+			pd.put("ENDTIME", ENDTIME+" 00:00:00");
+		} 
+		
+		//updates on reload AssignTraining list page (for each column in trainingList_s(compare end time with current time to update the status to be 0(finished/完成))) 
+		List<Training> trainingList_s = trainingService.listTrainingToSelect(pd);
+		for (int i=0; i < trainingList_s.size() ;i++) {
+
+			SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+			Date endTime = sdformat.parse(trainingList_s.get(i).getENDTIME());
+			Date CURRENTTIME = new Date();
+			if(endTime.compareTo(CURRENTTIME) < 0){
+				String status = trainingList_s.get(i).getSTATUS();
+				if(!"0".equals(status)){
+					String training_id = trainingList_s.get(i).getTRAINING_ID();
+					pd.put("TRAINING_ID", training_id);
+					trainingService.editStatus(pd);
+				}
+			}
+		}
+		
+		//Error to be noted
+		/*String curUser = Jurisdiction.getUsername();//pd.getString("USERNAME");
+		System.out.println("curuser is : " + curUser);*/
+		// user can only see his training
+/*		if("admin".equals(Jurisdiction.getUsername())){
+			pd.put("USERNAME", "");
+		}else if(!"admin".equals(Jurisdiction.getUsername())){
+			pd.put("USERNAME", Jurisdiction.getUsername());
+			pd.put("STATUZ", "1");	
+		}*/
+		/*pd.put("curUser", "admin");*/
+		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
+		page.setPd(pd);
+
+		List<PageData>	varList = assignTrainingService.historyList(page);
+		mv.setViewName("system/assignTraining/historyAssignTraining_list");
+		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
@@ -226,7 +266,8 @@ public class AssignTrainingController extends BaseController {
 			ModelAndView mv = this.getModelAndView();
 			PageData pd = new PageData();
 			pd = this.getPageData();
-			if(!"admin".equals(Jurisdiction.getUsername())){ //if the user view the assigned training then the status will change to already read
+			//if the user view the assigned training then the status will change to already read (STATUS = 1)
+			if(!"admin".equals(Jurisdiction.getUsername())){ 
 				assignTrainingService.editStatus(pd);
 			}
 			pd = assignTrainingService.findById(pd);	//根据ID读取
@@ -246,14 +287,10 @@ public class AssignTrainingController extends BaseController {
 		pd = this.getPageData();
 		List<Training> trainingList = trainingService.listTrainingToSelect(pd);
 		List<User> userList = userService.listAllUsers(pd);
-		//List<PageData>	userList = userService.listUsersBystaff(page);	//列出用户列表(弹窗选择用)
-		//pd.put("ROLE_ID", "1");
-		//List<Role> roleList = roleService.listAllRolesByPId(pd);//列出所有系统用户角色
 		mv.setViewName("system/assignTraining/assignTraining_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("trainingList", trainingList);
 		mv.addObject("userList", userList);
-		//mv.addObject("roleList", roleList);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
@@ -269,7 +306,6 @@ public class AssignTrainingController extends BaseController {
 		pd = this.getPageData();
 		List<Training> trainingList = trainingService.listTrainingToSelect(pd);
 		List<User> userList = userService.listAllUsers(pd);
-		//pd = trainingService.findById(pd);	//根据ID读取
 		pd = assignTrainingService.findById(pd);//根据ID读取	
 		mv.setViewName("system/assignTraining/assignTraining_edit");
 		mv.addObject("trainingList", trainingList);
@@ -305,37 +341,6 @@ public class AssignTrainingController extends BaseController {
 		return AppUtil.returnObject(pd, map);
 	}
 	
-	 /**导出到excel
-	 * @param
-	 * @throws Exception
-	 *//*
-	@RequestMapping(value="/excel")
-	public ModelAndView exportExcel() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"导出Headman到excel");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
-		ModelAndView mv = new ModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		Map<String,Object> dataMap = new HashMap<String,Object>();
-		List<String> titles = new ArrayList<String>();
-		titles.add("名称");	//1
-		titles.add("权限标识");	//2
-		titles.add("备注");	//3
-		dataMap.put("titles", titles);
-		List<PageData> varOList = headmanService.listAll(pd);
-		List<PageData> varList = new ArrayList<PageData>();
-		for(int i=0;i<varOList.size();i++){
-			PageData vpd = new PageData();
-			vpd.put("var1", varOList.get(i).getString("HEADMAN_NAME"));	//1
-			vpd.put("var2", varOList.get(i).getString("HEADMAN_NO"));	//2
-			vpd.put("var3", varOList.get(i).getString("CREATED_TIME"));	//3
-			varList.add(vpd);
-		}
-		dataMap.put("varList", varList);
-		ObjectExcelView erv = new ObjectExcelView();
-		mv = new ModelAndView(erv,dataMap);
-		return mv;
-	}*/
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder){

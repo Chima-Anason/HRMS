@@ -248,7 +248,7 @@ public class PayrollController extends BaseController {
 		}
 		
 		
-		
+		//error to be noted: trying to make calculation and add to only the front page but it doesn't have a column in DB
 		/*List<Payroll> payrollList_s = payrollService.listAllPayrolls(pd);
 		
 		for (int i=0; i < payrollList_s.size() ;i++) {
@@ -289,6 +289,7 @@ public class PayrollController extends BaseController {
 			
 		}*/
 		
+		//Admin can view all but user can only view his related page
 		pd.put("USERNAME", "admin".equals(Jurisdiction.getUsername())?"":Jurisdiction.getUsername()); //除admin用户外，只能查看自己的数据
 		page.setPd(pd);
 		
@@ -319,7 +320,7 @@ public class PayrollController extends BaseController {
 		String department = p.getString("DEPARTMENTNAME");
 		pd.put("DEPARTMENTNAME", department);
 		
-		//check if the viewer is Admin and disable the CONFIRM Button 
+		//check if the viewer is Admin and disable the CONFIRM Button at the front page
 		String user = Jurisdiction.getUsername();
 		pd.put("user", user);
 		mv.setViewName("system/payroll/payroll_view");
@@ -335,6 +336,7 @@ public class PayrollController extends BaseController {
 	@RequestMapping(value="/handle")
 	public ModelAndView handle() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"确认");
+		//Error to be Noted: if this line below is allowed the handle button can't be executed because the edit is set to be null
 		/*if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 */		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -362,7 +364,6 @@ public class PayrollController extends BaseController {
 		List<SalaryCategory> allowanceList = allowanceCategoryService.listAllAllowancesCategory(pd);
 		List<SalaryCategory> deductionList = deductionCategoryService.listAllDeductionsCategory(pd);
 		List<User> userList = userService.listAllUsers(pd);
-		
 		mv.setViewName("system/payroll/payroll_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("allowanceList", allowanceList);

@@ -64,6 +64,16 @@ public class AssignTrainingService implements AssignTrainingManager{
 		return (List<PageData>)dao.findForList("AssignTrainingMapper.datalistPage", page);
 	}
 	
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> historyList(Page page)throws Exception{
+		return (List<PageData>)dao.findForList("AssignTrainingMapper.histroryDatalistPage", page);
+	}
+	
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception

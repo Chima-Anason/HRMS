@@ -153,6 +153,9 @@
 		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
 		
 		 where a.TRAINING_ID = t.TRAINING_ID
+		 
+		and t.STATUS = '1'
+		
 		   <!-- <if test="pd.curUser!=null and pd.curUser!=''">
 		     and u.USERNAME = #{pd.curUser}
 		    </if>  -->
@@ -164,10 +167,62 @@
 		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
 			and
 				(
-					 a.STATUZ LIKE '%'+#{pd.keywords}+'%'
-					 or 
-					 t.STATUS LIKE '%'+#{pd.keywords}+'%'
+					 t.NAME LIKE '%'+#{pd.keywords}+'%'
 					 or
+					 u.USERNAME LIKE '%'+#{pd.keywords}+'%'
+					  or
+					 u.BIANMA LIKE '%'+#{pd.keywords}+'%'
+	
+				)
+		</if>
+		
+		<if test="pd.STARTTIME!=null and pd.STARTTIME!=''">
+			and t.STARTTIME &gt;= #{pd.STARTTIME} 
+		</if>
+		<if test="pd.ENDTIME!=null and pd.ENDTIME!=''">
+			and t.ENDTIME &lt;= #{pd.ENDTIME} 
+		</if>
+		<if test="pd.STATUZ!=null and pd.STATUZ!=''">
+			and a.STATUZ = #{pd.STATUZ} 
+		</if>
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="histroryDatalistPage" parameterType="page" resultType="pd">
+		select  a.ASS_ID,
+				a.STATUZ,
+				a.CONTENT,
+				a.TO_USERNAME,
+				a.FROM_USERNAME,
+				a.SEND_TIME,
+				a.TRAINING_ID,
+				t.STATUS,
+				t.NAME as TRAINNAME,
+				t.STARTTIME,
+				t.ENDTIME,
+				t.HOW_LONG,
+				a.USER_ID,
+				u.USERNAME,
+				d.NAME as DEPARTMENTNAME,
+				u.BIANMA
+				
+		from <include refid="tableName"></include> a
+		left join <include refid="trainingTableName"></include> t on a.TRAINING_ID = t.TRAINING_ID
+		left join <include refid="userTableName"></include> u on a.USER_ID = u.USER_ID
+		left join <include refid="departmentTableName"></include> d on u.DEPARTMENT_ID = d.DEPARTMENT_ID
+		
+		 where a.TRAINING_ID = t.TRAINING_ID
+		 
+		 and t.STATUS = '0'
+		
+		 <if test="pd.USERNAME!= null and pd.USERNAME != ''">
+			and u.USERNAME = #{pd.USERNAME}
+		</if> 
+		
+		<if test="pd.keywords!= null and pd.keywords != ''">      <!-- Keyword search -->
+			and
+				(
 					 t.NAME LIKE '%'+#{pd.keywords}+'%'
 					 or
 					 u.USERNAME LIKE '%'+#{pd.keywords}+'%'
