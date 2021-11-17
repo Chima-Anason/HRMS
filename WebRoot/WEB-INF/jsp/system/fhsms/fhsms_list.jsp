@@ -105,11 +105,11 @@
 													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
 														<i class="ace-icon fa fa-search nav-search-icon"></i>
 													</a>
-													<c:if test="${QX.FHSMS == 1 }">
+													 <%-- <c:if test="${QX.FHSMS == 1 }"> --%> 
 													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">
 														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
 													</a>
-													</c:if>
+													 <%-- </c:if> --%> 
 													<c:if test="${QX.del == 1 }">
 													<a class="btn btn-xs btn-danger" onclick="del('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
@@ -174,7 +174,7 @@
 						<table style="width:100%;">
 							<tr>
 								<td style="vertical-align:top;">
-									<c:if test="${QX.FHSMS == 1 }"><a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要发站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a></c:if>
+									<c:if test="${QX.FHSMS == 1 }"> <a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要发站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a> </c:if> 
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
 									</c:if>

@@ -230,11 +230,15 @@ public class BankController extends BaseController {
 		PageData pd = new PageData();	
 		Map<String,Object> map = new HashMap<String,Object>();
 		pd = this.getPageData();
+		String msg = "ok";	
 		
 		if(bankService.findByUserId(pd) == null || "".equals(bankService.findByUserId(pd) )){	//Determine if the user is already binded
 			bankService.userBinding(pd);				//执行保存
 			FHLOG.save(Jurisdiction.getUsername(), "新增楼宇："+pd.getString("USER_NAME"));
+	}else{
+		msg = "error";
 	}
+		pd.put("msg", msg);
 		
 		return AppUtil.returnObject(pd, map);
 	}

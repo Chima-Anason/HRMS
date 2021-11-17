@@ -31,6 +31,7 @@ import com.fh.util.DateUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import com.fh.util.Jurisdiction;
+import com.fh.service.fhoa.myleave.MyleaveManager;
 import com.fh.service.system.allowanceCategory.AllowanceCategoryManager;
 import com.fh.service.system.deductionCategory.DeductionCategoryManager;
 import com.fh.service.system.fhbutton.FhbuttonManager;
@@ -58,6 +59,8 @@ public class PayrollController extends BaseController {
 	private DeductionCategoryManager deductionCategoryService;
 	@Resource(name="roleService")
 	private RoleManager roleService;
+	@Resource(name="myleaveService")
+	private MyleaveManager myleaveService;
 	
 	/**保存
 	 * @param
@@ -98,6 +101,9 @@ public class PayrollController extends BaseController {
 		if(null == Deduct2 || "".equals(Deduct2)){
 			Deduct2 = "0.00";
 		}
+		
+		//PageData leaveCount = myleaveService.getUserLeaveCount(pd);
+		
 		
 		//convert to double
 		double BS = Double.parseDouble(Basic_salary);
@@ -311,6 +317,9 @@ public class PayrollController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		List<SalaryCategory> allowanceList = allowanceCategoryService.listAllAllowancesCategory(pd);
+		List<SalaryCategory> deductionList = deductionCategoryService.listAllDeductionsCategory(pd);
+		List<User> userList = userService.listAllUsers(pd);
 		pd = payrollService.findById(pd);	//根据ID读取
 		
 		PageData p = payrollService.findValueByIdForView(pd);
@@ -324,6 +333,9 @@ public class PayrollController extends BaseController {
 		String user = Jurisdiction.getUsername();
 		pd.put("user", user);
 		mv.setViewName("system/payroll/payroll_view");
+		mv.addObject("allowanceList", allowanceList);
+		mv.addObject("deductionList", deductionList);
+		mv.addObject("userList", userList);
 		mv.addObject("pd", pd);
 		return mv;
 	}

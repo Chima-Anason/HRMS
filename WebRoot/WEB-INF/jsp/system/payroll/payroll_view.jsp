@@ -61,28 +61,60 @@
 							
 							<tr>	
 								<td style="width:75px;text-align: right;padding-top: 10px;">津贴:</td>
-								<td style="padding-top: 10px;">  ${pd.ALLOWANCE1} </td>	
+								 <td>
+									<select class="chosen-select form-control" name="ALLOWANCE1" id="ALLOWANCE1" data-placeholder="请选择津贴" style="vertical-align:top;" style="width:98%;" disabled>
+										<option value=""></option>
+										<c:forEach items="${allowanceList}" var="allowance">
+											<option value="${allowance.CAT_ID }" <c:if test="${allowance.CAT_ID == pd.ALLOWANCE1 }">selected</c:if>>${allowance.CAT_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+								<%-- <td style="padding-top: 10px;">  ${pd.ALLOWANCE1} </td>	 --%>
 								<td style="width:75px;text-align: right;padding-top: 10px;">津贴币值:</td>
 								<td style="padding-top: 10px;">  ${pd.ALLOWANCE1_AMOUNT} </td>	
 							</tr>
 							
 							<tr>	
 								<td style="width:75px;text-align: right;padding-top: 10px;">其他津贴:</td>
-								<td style="padding-top: 10px;">  ${pd.ALLOWANCE2} </td>	
+								<td id="juese">
+									<select class="chosen-select form-control" name="ALLOWANCE2" id="ALLOWANCE2" data-placeholder="请选择津贴" style="vertical-align:top;" style="width:98%;" disabled>
+										<option value=""></option>
+										<c:forEach items="${allowanceList}" var="allowance2">
+											<option value="${allowance2.CAT_ID }" <c:if test="${allowance2.CAT_ID == pd.ALLOWANCE2 }">selected</c:if>>${allowance2.CAT_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+								<%-- <td style="padding-top: 10px;">  ${pd.ALLOWANCE2} </td> --%>	
 								<td style="width:75px;text-align: right;padding-top: 10px;">其他津贴币值:</td>
 								<td style="padding-top: 10px;">  ${pd.ALLOWANCE2_AMOUNT} </td>	
 							</tr>
 							
 							<tr>	
 								<td style="width:75px;text-align: right;padding-top: 10px;">扣除:</td>
-								<td style="padding-top: 10px;">  ${pd.DEDUCTION1} </td>	
+								 <td >
+									<select class="chosen-select form-control" name="DEDUCTION1" id="DEDUCTION1" data-placeholder="请选择扣除" style="vertical-align:top;" style="width:98%;" disabled>
+										<option value=""></option>
+										<c:forEach items="${deductionList}" var="deduction">
+											<option value="${deduction.CAT_ID }" <c:if test="${deduction.CAT_ID == pd.DEDUCTION1 }">selected</c:if>>${deduction.CAT_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+								<%-- <td style="padding-top: 10px;">  ${pd.DEDUCTION1} </td>	 --%>
 								<td style="width:75px;text-align: right;padding-top: 10px;">扣除币值:</td>
 								<td style="padding-top: 10px;">  ${pd.DEDUCTION1_AMOUNT} </td>	
 							</tr>
 							
 							<tr>	
 								<td style="width:75px;text-align: right;padding-top: 10px;">其他扣除:</td>
-								<td style="padding-top: 10px;">  ${pd.DEDUCTION2} </td>	
+								<td >
+									<select class="chosen-select form-control" name="DEDUCTION2" id="DEDUCTION2" data-placeholder="请选择其他扣除" style="vertical-align:top;" style="width:98%;" disabled>
+										<option value=""></option>
+										<c:forEach items="${deductionList}" var="deduction2">
+											<option value="${deduction2.CAT_ID }" <c:if test="${deduction2.CAT_ID == pd.DEDUCTION2 }">selected</c:if>>${deduction2.CAT_NAME }</option>
+										</c:forEach>
+									</select>
+								</td>
+								<%-- <td style="padding-top: 10px;">  ${pd.DEDUCTION2} </td>	 --%>
 								<td style="width:75px;text-align: right;padding-top: 10px;">其他扣除币值:</td>
 								<td style="padding-top: 10px;">  ${pd.DEDUCTION2_AMOUNT} </td>	
 							</tr>

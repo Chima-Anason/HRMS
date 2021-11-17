@@ -118,7 +118,7 @@
 				<div class="form-actions">
 					<div style="width:90%;padding-left:5%;">
 
-						<!--  <div style="float: left;padding-top:2px;">
+						  <%--  <div style="float: left;padding-top:2px;">
 							<i><img src="static/login/yan.png" /></i>
 						</div> 
 						 <div style="float: left;" class="codediv">
@@ -127,10 +127,10 @@
 						</div>
 						<div style="float: left;">
 							<i><img style="height:22px;" id="codeImg" alt="点击更换" title="点击更换" src="" /></i>
-						</div>  -->
-						 <%-- <c:if test="${pd.isZhuce == 'yes' }"> 
+						</div> 
+						  <c:if test="${pd.isZhuce == 'yes' }"> 
 						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(1);" class="btn btn-success">Sign-Up</a></span>
-						</c:if> --%> 
+						</c:if>   --%>
 						<span class="pull-right"><a onclick="severCheck();" class="flip-link btn btn-info" id="to-recover">login</a></span>
 					</div>
 				</div>
@@ -147,15 +147,15 @@
 		<div id="loginbox">
 			<form action="" method="post" name="loginForm2" id="loginForm2">
 				<div class="control-group normal_text">
-					<h3>
+					<!-- <h3>
 						<img src="static/login/logo.png" alt="Logo" />
-					</h3>
+					</h3> -->
 				</div>
 				<div class="control-group">
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
-							<i>username</i>
+							<i>用户名</i>
 							</span><input type="text" name="USERNAME" id="USERNAME" value="" placeholder="please enter username" />
 						</div>
 					</div>
@@ -164,7 +164,7 @@
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
-							<i>password</i>
+							<i>密码</i>
 							</span><input type="password" name="PASSWORD" id="PASSWORD" placeholder="please enter password" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
 						</div>
 					</div>
@@ -173,7 +173,7 @@
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
-							<i>confirm</i>
+							<i>确认密码</i>
 							</span><input type="password" name="chkpwd" id="chkpwd" placeholder="please re-enter password" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
 						</div>
 					</div>
@@ -182,7 +182,7 @@
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
-							<i>fullname</i>
+							<i>姓名</i>
 							</span><input type="text" name="NAME" id="name" value="" placeholder="please enter fullname" />
 						</div>
 					</div>
@@ -191,7 +191,7 @@
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
-							<i>e-mail</i>
+							<i>mail</i>
 							</span><input type="text" name="EMAIL" id="EMAIL" value="" placeholder="please enter e-mail" />
 						</div>
 					</div>

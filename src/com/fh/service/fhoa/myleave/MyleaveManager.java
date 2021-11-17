@@ -66,5 +66,12 @@ public interface MyleaveManager{
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
 	
+	
+	/**获取总数
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData getUserLeaveCount(PageData pd)throws Exception;
+	
 }
 

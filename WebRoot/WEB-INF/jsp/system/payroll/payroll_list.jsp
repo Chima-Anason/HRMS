@@ -47,7 +47,7 @@
 								<td style="vertical-align:top;padding-left:2px;">
 								 	<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="工资状态" style="vertical-align:top;width: 68px;">
 									<option value="">全部</option>
-									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>收讫</option>
+									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>收到</option>
 									<option value="0" <c:if test="${var.STATUS == '0'  }">selected</c:if>>正在运行</option>
 								  	</select>
 								</td>
@@ -102,7 +102,7 @@
 											<td class='left'>${var.TOTAL_DEDUCTION}</td>
 											<td class='left'>${var.NET_SALARY}</td>
 											<td class='center' id="STATUS${vs.index+1}">
-											<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">收讫</span></c:if>
+											<c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">收到</span></c:if>
 											<c:if test="${var.STATUS == '0' }"><h7 class="green">正在运行</h7><img src="static/images/runing.gif" width="12px;" /></c:if>
 											</td>
 											

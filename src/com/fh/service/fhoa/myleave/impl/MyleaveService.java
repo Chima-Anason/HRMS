@@ -96,5 +96,13 @@ public class MyleaveService implements MyleaveManager{
 		dao.delete("MyleaveMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
+	
+	/**获取总数
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData getUserLeaveCount(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("MyleaveMapper.getUserLeaveCount", pd);
+	}
 }
 

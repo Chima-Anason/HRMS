@@ -61,8 +61,9 @@ public class SysUserController extends BaseController {
 					if(Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(rcode)){				//判断登录验证码
 						pd.put("USER_ID", this.get32UUID());	//ID 主键
 						pd.put("ROLE_ID", "fhadminzhuche");	//角色ID fhadminzhuche 为注册用户
-						pd.put("NUMBER", "");					//编号
-						pd.put("PHONE", "");					//手机号
+						pd.put("BIANMA", "");					//编号
+						pd.put("NAME_EN", "");	
+						pd.put("TEL", "");					//手机号
 						pd.put("BZ", "注册用户");				//备注
 						pd.put("LAST_LOGIN", "");				//最后登录时间
 						pd.put("IP", "");						//IP
@@ -70,6 +71,32 @@ public class SysUserController extends BaseController {
 						pd.put("SKIN", "no-skin");				//用户默认皮肤
 						pd.put("RIGHTS", "");	
 						pd.put("ROLE_IDS", "");
+						
+						pd.put("DEPARTMENT_ID", "");
+						pd.put("FUNCTIONS", "");
+						pd.put("SEX", "");
+						pd.put("BIRTHDAY", "");
+						pd.put("NATION", "");
+						pd.put("JOBTYPE", "");
+						pd.put("JOBJOINTIME", "");
+						pd.put("FADDRESS", "");
+						pd.put("POLITICAL", "");
+						pd.put("PJOINTIME", "");
+						pd.put("SFID", "");
+						pd.put("MARITAL", "");
+						pd.put("DJOINTIME", "");
+						pd.put("POST", "");
+						pd.put("POJOINTIME", "");
+						pd.put("EDUCATION", "");
+						pd.put("SCHOOL", "");
+						pd.put("MAJOR", "");
+						pd.put("FTITLE", "");
+						pd.put("CERTIFICATE", "");
+						pd.put("CONTRACTLENGTH", "");
+						pd.put("CSTARTTIME", "");
+						pd.put("CENDTIME", "");
+						pd.put("ADDRESS", "");
+						
 						pd.put("PASSWORD", new SimpleHash("SHA-1", pd.getString("USERNAME"), pd.getString("PASSWORD")).toString());	//密码加密
 						if(null == userService.findByUsername(pd)){	//判断用户名是否存在
 							userService.saveU(pd); 					//执行保存

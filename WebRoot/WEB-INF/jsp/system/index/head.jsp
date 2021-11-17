@@ -32,7 +32,7 @@
 				<!-- #section:basics/navbar.dropdown -->
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-						<li title="待办任务" class="grey" id="fhtasktss">
+						<!-- <li title="待办任务" class="grey" id="fhtasktss">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-tasks"></i>
 								<span class="badge badge-grey" id="taskCount">0</span>
@@ -56,7 +56,7 @@
 								</li>
 							</ul>
 						</li>
-
+ -->
 						<li title="即时聊天" class="purple">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#" id="myIm">
 								<i class="ace-icon fa fa-bell icon-animated-bell"></i>

@@ -149,5 +149,16 @@
 		</foreach>
 	</delete>
 	
+	
+	<!-- 获取总数 -->
+	<select id="getUserLeaveCount" parameterType="pd" resultType="pd">
+		select 
+			count(MYLEAVE_ID) userCount
+		from 
+		<include refid="tableName"></include>
+		where 
+			USERNAME = #{pd.USERNAME}
+	</select>
+	
 	<!-- fh313596790qq(青苔) -->
 </mapper>

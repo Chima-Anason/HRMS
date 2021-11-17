@@ -39,10 +39,10 @@
 										</span>
 									</div>
 								</td>
-								<td style="vertical-align:top;padding-left:2px;">
+								<!-- <td style="vertical-align:top;padding-left:2px;">
 								 	<select name="TYPE" id="TYPE"  title="请假类型" style="width:100%;">
 		                          	</select>	
-								</td>
+								</td> -->
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
@@ -236,7 +236,7 @@
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 $("#simple-table").tips({
 							side:3,
-				            msg:'已创建请假单,请到待办任务中提交申请',
+				            msg:'已创建请假单',
 				            bg:'#AE81FF',
 				            time:3
 				     });
