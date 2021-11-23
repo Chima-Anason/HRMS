@@ -260,6 +260,16 @@
 			USERNAME = #{USERNAME}
 	</select>
 	
+	<!-- 通过USERNAME获取数据 -->
+	<select id="findUsernameById" parameterType="pd" resultType="String">
+		select 
+			USERNAME
+		from 
+			<include refid="tableName"></include>
+		where 
+			USER_ID = #{USER_ID}
+	</select>
+	
 	<!-- 存入IP -->
 	<update id="saveIP" parameterType="pd" >
 		update 

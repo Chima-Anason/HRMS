@@ -32,20 +32,13 @@
 						
 						<form action="payroll/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="SALARY_ID" id="SALARY_ID" value="${pd.SALARY_ID}"/>
-						<input type="hidden" name="USER_ID" id="USER_ID" value=""/>
+						<input type="hidden" name="USER_ID" id="USER_ID" value="${pd.USER_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 						<c:if test="${fx != 'head'}">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 						    <tr>
 							    <td style="width:75px;text-align: right;padding-top: 13px;">用户:</td>
-							    <td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-							    
-							   <%--  <c:if test="${userList.USER_ID == pd.USER_ID }">
-							    	<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${userList.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-							    </c:if>
-							    <c:if test="${!userList.USER_ID == pd.USER_ID }">
-							    	<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-							    </c:if> --%>
+							     <td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${user_name}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td> 
 							    
   								<td id="juese3"><button type="button" class="btn btn-primary" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
 							</tr>

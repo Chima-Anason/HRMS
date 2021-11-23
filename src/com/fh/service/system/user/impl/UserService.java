@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
-
 import com.fh.entity.system.User;
 import com.fh.service.system.user.UserManager;
 import com.fh.util.PageData;
@@ -64,6 +63,15 @@ public class UserService implements UserManager{
 	 */
 	public PageData findByUsername(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("UserMapper.findByUsername", pd);
+	}
+	
+	/**通过USERNAEME获取数据
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	public String findUsernameById(PageData pd)throws Exception{
+		return (String)dao.findForObject("UserMapper.findUsernameById", pd);
 	}
 	
 	/**列出某角色下的所有用户

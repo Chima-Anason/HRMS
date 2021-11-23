@@ -398,11 +398,16 @@ public class PayrollController extends BaseController {
 		List<SalaryCategory> deductionList = deductionCategoryService.listAllDeductionsCategory(pd);
 		List<User> userList = userService.listAllUsers(pd);
 		pd = payrollService.findById(pd);//根据ID读取	
+		
+		String user_id = pd.get("USER_ID").toString();
+		String user_name = userService.findUsernameById(pd);//find USER_NAME
+		
 		mv.setViewName("system/payroll/payroll_edit");
 		mv.addObject("allowanceList", allowanceList);
 		mv.addObject("deductionList", deductionList);
 		mv.addObject("userList", userList);
 		mv.addObject("msg", "edit");
+		mv.addObject("user_name", user_name);
 		mv.addObject("pd", pd);
 		return mv;
 	}	

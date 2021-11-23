@@ -25,12 +25,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.Training;
+import com.fh.entity.system.User;
 import com.fh.util.AppUtil;
 import com.fh.util.ObjectExcelView;
 import com.fh.util.PageData;
 import com.fh.util.Jurisdiction;
 import com.fh.service.system.fhbutton.FhbuttonManager;
 import com.fh.service.system.training.TrainingManager;
+import com.fh.service.system.user.UserManager;
 
 /** 
  * 说明：HRMS

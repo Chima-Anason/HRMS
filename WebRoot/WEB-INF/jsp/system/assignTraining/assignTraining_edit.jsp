@@ -13,7 +13,10 @@
 	<!-- jsp文件头和头部 -->
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 (带小时分钟)-->
-	<link rel="stylesheet" href="static/ace/css/bootstrap-datetimepicker.css" />
+	<!-- <link rel="stylesheet" href="static/ace/css/bootstrap-datetimepicker.css" /> -->
+	<!-- 日期框 -->
+	<!-- <link rel="stylesheet" href="static/ace/css/datepicker.css" /> -->
+	<!-- 树形下拉框start -->
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -27,22 +30,25 @@
 					
 					<form action="assignTraining/${msg }.do" name="Form" id="Form" method="post">
 						<input type="hidden" name="ASS_ID" id="ASS_ID" value="${pd.ASS_ID}"/>
-						<input type="hidden" name="USER_ID" id="USER_ID" value=""/>
+						<input type="hidden" name="USER_ID" id="USER_ID" value="${pd.USER_ID}"/>
 						
 						
-						<textarea style="display: none;" name="TRAINING_IDS" id="TRAINING_IDS" >${pd.TRAINING_IDS }</textarea>
+						<%-- <textarea style="display: none;" name="TRAINING_IDS" id="TRAINING_IDS" >${pd.TRAINING_IDS }</textarea> --%>
 						<div id="zhongxin" style="padding-top: 13px;">
+						<c:if test="${fx != 'head'}">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
-
-  								<td style="width:79px;text-align: right;padding-top: 13px;">用户:</td>
-  								<td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td>
-  								<td id="juese3"><button class="btn btn-outline-secondary" type="button" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
+						    <tr>
+							    <td style="width:75px;text-align: right;padding-top: 13px;">用户:</td>
+							     <td id="juese2"><input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${user_name}" maxlength="200" placeholder="请选择用户" title="用户" aria-label="USERNAME" aria-describedby="USER_ID" readonly></td> 
+							    
+  								<td id="juese3"><button type="button" class="btn btn-primary" name="USERNAME" id="USERNAME"  onclick="xuanTp('USERNAME');">选择用户</button></td>
 							</tr>
-						
 						</table>
+						</c:if>
+						
+						<c:if test="${fx != 'head'}">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<c:if test="${fx != 'head'}">
+							
 										<tr>
 											<td style="width:79px;text-align: right;padding-top: 13px;">培训:</td>
 											<td id="juese">
@@ -54,8 +60,8 @@
 											</select>
 											</td>
 										</tr>
-										</c:if>
-										<c:if test="${fx == 'head'}">
+										
+										<%-- <c:if test="${fx == 'head'}">
 											<input name="TRAINING_ID" id="training_id" value="${pd.TRAINING_ID }" type="hidden" />
 										</c:if>
 							<c:if test="${fx != 'head'}">
@@ -64,7 +70,7 @@
 								</c:if>
 										<c:if test="${fx == 'head'}">
 											<input name="USERNAME" id="USERNAME" value="${pd.USERNAME }" type="hidden" />
-										</c:if>
+										</c:if> --%>
 								<c:if test="${fx != 'head'}">
 										<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">评论:</td>
@@ -80,6 +86,7 @@
 									</td>
 								</tr>
 						</table>
+						</c:if>
 						</div>
 						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
 					</form>
@@ -99,20 +106,20 @@
 	<!-- 页面底部js¨ -->
 	<%@ include file="../../system/index/foot.jsp"%>
 	<!-- 日期框(带小时分钟) -->
-	<script src="static/ace/js/date-time/moment.js"></script>
+	<!-- <script src="static/ace/js/date-time/moment.js"></script>
 	<script src="static/ace/js/date-time/locales.js"></script>
-	<script src="static/ace/js/date-time/bootstrap-datetimepicker.js"></script>
+	<script src="static/ace/js/date-time/bootstrap-datetimepicker.js"></script> -->
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
 		
-		$(function() {
+		/* $(function() {
 			//日期框(带时间)
 			$('.form-control').datetimepicker().next().on(ace.click_event, function(){
 				$(this).prev().focus();
 			});
-		});
+		}); */
 		
 		//初始分类,调用数据字典
 		$(function() {
@@ -150,7 +157,7 @@
 		}   
 		
 		
-		   if($("#USER_ID").val()==""){
+		    if($("#USER_ID").val()==""){
 			$("#juese3").tips({
 				side:3,
 	            msg:'选择用户',
@@ -159,7 +166,7 @@
 	        });
 			$("#USER_ID").focus();
 			return false;
-		}
+		} 
 		if($("#CONTENT").val()==""){
 				$("#CONTENT").tips({
 					side:3,
@@ -238,10 +245,10 @@
 		}
 	}
 		
-		$(function() {
+		/* $(function() {
 			//日期框
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
-		});
+		}); */
 		</script>
 </body>
 </html>

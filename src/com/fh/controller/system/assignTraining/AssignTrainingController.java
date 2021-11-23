@@ -307,10 +307,12 @@ public class AssignTrainingController extends BaseController {
 		List<Training> trainingList = trainingService.listTrainingToSelect(pd);
 		List<User> userList = userService.listAllUsers(pd);
 		pd = assignTrainingService.findById(pd);//根据ID读取	
+		String user_name = userService.findUsernameById(pd);//find USER_NAME
 		mv.setViewName("system/assignTraining/assignTraining_edit");
 		mv.addObject("trainingList", trainingList);
 		mv.addObject("userList", userList);
 		mv.addObject("msg", "edit");
+		mv.addObject("user_name", user_name);
 		mv.addObject("pd", pd);
 		return mv;
 	}	
